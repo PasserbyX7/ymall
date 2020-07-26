@@ -15,7 +15,7 @@ spring:
         shared-configs:
         - data-id: jwt.yml
           group: common
-        - data-id: cache.yml
+        - data-id: redis.yml
           group: common
         - data-id: swagger.yml
           group: common
