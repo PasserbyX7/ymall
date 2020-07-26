@@ -4,12 +4,17 @@ import org.apache.http.HttpHost;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@RefreshScope
 @Configuration
 public class EsConfiguration {
 
+    @Value("${spring.data.elasticsearch.cluster-node}")
+    private String host;
     /**
      * ES通用设置项
      */
@@ -27,7 +32,7 @@ public class EsConfiguration {
      */
     @Bean
     public RestHighLevelClient EsRestClient() {
-        return new RestHighLevelClient(RestClient.builder(new HttpHost("192.168.206.130", 9200)));
+        return new RestHighLevelClient(RestClient.builder(new HttpHost(host, 9200)));
     }
 
 }

@@ -17,3 +17,6 @@ spring:
           group: common
         - data-id: swagger.yml
           group: common
+        extension-configs:
+        - data-id: es.yml
+          group: ${name}
