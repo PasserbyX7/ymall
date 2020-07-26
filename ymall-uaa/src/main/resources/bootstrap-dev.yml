@@ -22,3 +22,4 @@ spring:
         extension-configs:
         - data-id: wxMini.yml
           group: sensitive
+
