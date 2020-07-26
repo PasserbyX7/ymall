@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.yinn</groupId>
+        <artifactId>ymall-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>ymall-common-db</artifactId>
+    <name>ymall-common-db</name>
+    <description>数据库公共模块</description>
+
+    <dependencies>
+        <!-- Project Begin -->
+        <dependency>
+            <groupId>com.yinn</groupId>
+            <artifactId>ymall-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- Project End -->
+
+        <!-- Spring Cloud Begin -->
+        <!-- <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+        </dependency> -->
+        <!-- Spring Cloud End -->
+
+        <!-- MySQL Begin -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- MySQL End -->
+
+        <!-- Utilities Begin -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Utilities End -->
+    </dependencies>
+
+</project>

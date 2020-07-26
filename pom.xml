@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.yinn</groupId>
+    <artifactId>ymall-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>ymall-parent</name>
+    <description>ymall父工程</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>ymall-cart</module>
+        <module>ymall-common</module>
+        <module>ymall-common-db</module>
+        <module>ymall-gateway</module>
+        <module>ymall-member</module>
+        <module>ymall-order</module>
+        <module>ymall-product</module>
+        <module>ymall-search</module>
+        <module>ymall-third</module>
+        <module>ymall-uaa</module>
+        <module>ymall-ware</module>
+        <module>ymall-payment</module>
+        <module>ymall-coupon</module>
+    </modules>
+
+    <properties>
+        <!-- 环境变量 -->
+        <java.version>14</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 版本控制 -->
+        <spring-cloud.version>Hoxton.SR6</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+        <sentinel-transport.version>1.7.1</sentinel-transport.version>
+        <mybatis-plus-boot-starter.version>3.3.2</mybatis-plus-boot-starter.version>
+        <validation-api.version>2.0.1.Final</validation-api.version>
+        <elasticsearch.version>7.6.2</elasticsearch.version>
+        <swagger.version>2.9.2</swagger.version>
+        <nimbus-jose-jwt.version>8.17</nimbus-jose-jwt.version>
+        <aliyun-java-sdk-core.version>4.5.1</aliyun-java-sdk-core.version>
+        <alicloud-oss.version>2.2.0.RELEASE</alicloud-oss.version>
+        <best-pay-sdk.version>1.3.3</best-pay-sdk.version>
+        <rocketmq.version>2.1.0</rocketmq.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Cloud Begin -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alicloud-oss</artifactId>
+                <version>${alicloud-oss.version}</version>
+            </dependency>
+            <!-- Spring Cloud End -->
+
+            <!-- MySQL Begin -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <!-- MySQL End -->
+
+            <!-- ES Begin -->
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <!-- ES End -->
+
+            <!-- Utilities Begin -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus-jose-jwt.version}</version>
+            </dependency>
+            <!-- Utilities End -->
+
+            <!-- MQ Begin -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq.version}</version>
+            </dependency>
+            <!-- MQ End -->
+
+            <!-- Third SDK Begin -->
+            <dependency>
+                <groupId>cn.springboot</groupId>
+                <artifactId>best-pay-sdk</artifactId>
+                <version>${best-pay-sdk.version}</version>
+            </dependency>
+            <!-- Third SDK End -->
+        </dependencies>
+    </dependencyManagement>
+
+</project>

@@ -1,0 +1,12 @@
+{
+    "properties": [
+        {
+            "name": "name",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "table-prefix",
+            "type": "java.lang.String"
+        }
+    ]
+}

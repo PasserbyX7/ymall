@@ -1,0 +1,24 @@
+<settings>
+    <mirrors>
+        <mirror>
+            <id>nexus-aliyun</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Nexus aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </mirror>
+    </mirrors>
+    <profiles>
+        <profile>
+            <id>development</id>
+            <activation>
+                <jdk>14</jdk>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <maven.compiler.source>14</maven.compiler.source>
+                <maven.compiler.target>14</maven.compiler.target>
+                <maven.compiler.compilerVersion>14</maven.compiler.compilerVersion>
+            </properties>
+        </profile>
+    </profiles>
+</settings>

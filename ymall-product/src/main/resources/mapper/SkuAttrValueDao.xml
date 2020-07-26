@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yinn.ymall.product.dao.SkuAttrValueDao">
+    <resultMap id="skuAttrDTO" type="com.yinn.ymall.product.dto.ItemDTO$SkuAttrDTO">
+        <result property="attrId" column="attr_id"/>
+        <result property="attrName" column="attr_name"/>
+        <collection property="attrValues" ofType="com.yinn.ymall.product.dto.ItemDTO$SkuAttrValueWithSkuIdDTO">
+            <result property="attrValue" column="attr_value"/>
+            <result property="skuIds" column="sku_ids"/>
+        </collection>
+    </resultMap>
+    <select id="listSkuAttrDTOBySpuId" resultMap="skuAttrDTO">
+        SELECT
+            sav.`attr_id`,
+            sav.`attr_name`,
+            sav.`attr_value`,
+            GROUP_CONCAT( DISTINCT s.`id` ) sku_ids
+        FROM
+            `pms_sku` s
+            LEFT JOIN `pms_sku_attr_value` sav ON sav.`sku_id` = s.`id`
+        WHERE
+            s.`spu_id` = #{spuId}
+        GROUP BY
+            sav.`attr_id`,
+            sav.`attr_name`,
+            sav.`attr_value`
+    </select>
+</mapper>

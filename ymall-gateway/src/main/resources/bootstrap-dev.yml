@@ -1,0 +1,17 @@
+name: gateway
+spring:
+  application:
+    name: ${name}-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.yinn-mall:8848
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.profiles.active}
+        group: ${name}
+        file-extension: yml
+        refresh-enabled: true
+
+
+
