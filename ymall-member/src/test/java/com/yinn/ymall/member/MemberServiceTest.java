@@ -1,14 +1,14 @@
-package com.yinn.ymall.member;
+// package com.yinn.ymall.member;
 
-import org.junit.jupiter.api.Test;
+// import org.junit.jupiter.api.Test;
 
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class MemberServiceTest {
+// @SpringBootTest
+// class MemberServiceTest {
 
 
-    @Test
-    void memberSaveTest(){
-    }
-}
+//     @Test
+//     void memberSaveTest(){
+//     }
+// }
