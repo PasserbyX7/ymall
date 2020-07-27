@@ -21,8 +21,11 @@ public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter{
 		http
 			.authorizeRequests(authorizeRequests ->
 				authorizeRequests
-					.antMatchers(HttpMethod.GET, "/message/**").hasAuthority("SCOPE_message:read")
-					.antMatchers(HttpMethod.POST, "/message/**").hasAuthority("SCOPE_message:write")
+					.antMatchers(HttpMethod.GET, "/**").permitAll()
+					.antMatchers(HttpMethod.POST, "/**").permitAll()
+					.antMatchers(HttpMethod.PUT, "/**").permitAll()
+					.antMatchers(HttpMethod.DELETE, "/**").permitAll()
+					.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 					.anyRequest().permitAll()
 			)
             .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
