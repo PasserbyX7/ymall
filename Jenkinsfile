@@ -6,7 +6,7 @@ pipeline{
     }
     parameters{
         string(name:"VERSION_NAME",defaultValue:"1.0.0",description:"版本号")
-        string(name:"PROJECT_NAME",defaultValue:"ymall",description:"项目名")
+        string(name:"PROJECT_NAME",defaultValue:"ymall-",description:"项目名")
     }
     environment {
         DOCKER_CREDENTIAL_ID = "aliyun-hub"
