@@ -1,8 +1,8 @@
-package com.yinn.ymall.product.config;
+package com.yinn.ymall.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,6 +14,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
+@ConditionalOnProperty(prefix = "common.security", name = "enabled", matchIfMissing = true, havingValue = "true")
 public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter{
 
     @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
@@ -21,18 +22,13 @@ public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
 		http
-			.authorizeRequests(authorizeRequests ->
-				authorizeRequests
-					.antMatchers(HttpMethod.GET, "/**").permitAll()
-					.antMatchers(HttpMethod.POST, "/**").permitAll()
-					.antMatchers(HttpMethod.PUT, "/**").permitAll()
-					.antMatchers(HttpMethod.DELETE, "/**").permitAll()
-					.antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-					.anyRequest().permitAll()
-			)
+			.authorizeRequests(authorizeRequests ->authorizeRequests.anyRequest().permitAll())
             .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+            .csrf().disable()// TODO 完善CSRF
             .cors();
+        // @formatter:on
     }
 
     @Bean
@@ -40,15 +36,19 @@ public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter{
         return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
 
+    /**
+     * 跨域配置
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");//修改为添加而不是设置，* 最好改为实际的需要，我这是非生产配置，所以粗暴了一点
-        configuration.addAllowedMethod("*");//修改为添加而不是设置
-        configuration.addAllowedHeader("*");//这里很重要，起码需要允许 Access-Control-Allow-Origin
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }

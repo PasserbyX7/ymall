@@ -2,4 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.yinn.ymall.common.config.SwaggerConfiguration,\
 com.yinn.ymall.common.config.DateFormatConfiguration,\
 com.yinn.ymall.common.config.ControllerAdviceConfiguration,\
-com.yinn.ymall.common.config.FeignConfiguration
+com.yinn.ymall.common.config.FeignConfiguration,\
+com.yinn.ymall.common.config.ResourceServerConfiguration

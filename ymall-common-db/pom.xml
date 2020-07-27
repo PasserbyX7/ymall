@@ -19,13 +19,6 @@
         </dependency>
         <!-- Project End -->
 
-        <!-- Spring Cloud Begin -->
-        <!-- <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-        </dependency> -->
-        <!-- Spring Cloud End -->
-
         <!-- MySQL Begin -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -61,5 +54,5 @@
             </plugin>
 		</plugins>
     </build>
-    
+
 </project>
