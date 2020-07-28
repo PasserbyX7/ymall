@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.CommonRequest;
+import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
@@ -17,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @EnableConfigurationProperties(SmsProperties.class)
 public class SmsServiceImpl implements SmsService {
@@ -40,11 +44,13 @@ public class SmsServiceImpl implements SmsService {
         request.putQueryParameter("SignName", smsProperties.getSign());// 签名
         request.putQueryParameter("TemplateCode", smsProperties.getTemplateCode());// 模板
         request.putQueryParameter("TemplateParam", getTemplateParam(code));// 验证码
+        CommonResponse response=null;
         try {
-            var response = client.getCommonResponse(request);
+            response = client.getCommonResponse(request);
             if (!StringUtils.equals("OK", getResponseCode(response.getData())))
                 throw new SmsSendException();
         } catch (Exception e) {
+            log.error("短信发送失败，响应信息：{}",response);
             throw new SmsSendException();
         }
     }
