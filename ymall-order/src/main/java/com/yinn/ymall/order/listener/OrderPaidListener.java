@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RocketMQMessageListener(topic = MQConstant.Order.TOPIC, consumerGroup = MQConstant.Order.ORDER_CLOSE_CONSUMER_GROUP, selectorExpression = MQConstant.Order.TAG_PAID)
+@RocketMQMessageListener(topic = MQConstant.Order.TOPIC, consumerGroup = "order-"+MQConstant.Order.ORDER_PAID_CONSUMER_GROUP, selectorExpression = MQConstant.Order.TAG_PAID)
 public class OrderPaidListener implements RocketMQListener<OrderPaidDTO>{
 
     @Autowired

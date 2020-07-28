@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RocketMQMessageListener(topic = MQConstant.Ware.TOPIC, consumerGroup = MQConstant.Ware.WARE_UNLOCK_CONSUMER_GROUP, selectorExpression = MQConstant.Ware.TAG_UNLOCK)
+@RocketMQMessageListener(topic = MQConstant.Ware.TOPIC, consumerGroup = "ware-"+MQConstant.Ware.WARE_UNLOCK_CONSUMER_GROUP, selectorExpression = MQConstant.Ware.TAG_UNLOCK)
 public class WareStockListener implements RocketMQListener<String>{
 
     @Autowired

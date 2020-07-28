@@ -5,6 +5,7 @@ public class MQConstant {
     public static class Order {
         public static final String TOPIC = "order";
         public static final String ORDER_CLOSE_CONSUMER_GROUP = "order-close";
+        public static final String ORDER_PAID_CONSUMER_GROUP = "order-paid";
         public static final String TAG_CLOSE = "close";
         public static final String TAG_PAID = "paid";
         /**

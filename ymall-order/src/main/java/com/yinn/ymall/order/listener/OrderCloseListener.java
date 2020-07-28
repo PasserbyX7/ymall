@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RocketMQMessageListener(topic = MQConstant.Order.TOPIC, consumerGroup = MQConstant.Order.ORDER_CLOSE_CONSUMER_GROUP, selectorExpression = MQConstant.Order.TAG_CLOSE)
+@RocketMQMessageListener(topic = MQConstant.Order.TOPIC, consumerGroup = "order-"+MQConstant.Order.ORDER_CLOSE_CONSUMER_GROUP, selectorExpression = MQConstant.Order.TAG_CLOSE)
 public class OrderCloseListener implements RocketMQListener<String>{
 
     @Autowired
