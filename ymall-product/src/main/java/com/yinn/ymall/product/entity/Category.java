@@ -46,7 +46,6 @@ public class Category implements Serializable {
 	/**
 	 * 是否显示
 	 */
-    @TableLogic(value = "1",delval = "0")
 	private Boolean isShow;
 	/**
 	 * 是否显示在导航栏
