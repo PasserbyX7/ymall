@@ -20,7 +20,7 @@ public class AttrGroupQueryDTO extends QueryDTO<AttrGroup> implements Serializab
     @ApiModelProperty("查询关键字：匹配分类id或属性组名")
     private String key;
 
-    @ApiModelProperty("分类id")
+    @ApiModelProperty(value="分类id",example = "1")
     private Long categoryId;
 
 }
