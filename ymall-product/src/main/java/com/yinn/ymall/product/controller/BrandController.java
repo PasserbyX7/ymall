@@ -74,5 +74,10 @@ public class BrandController {
         return R.ok();
     }
 
-
+    @ApiOperation("品牌批量删除")
+    @DeleteMapping("/batch")
+    public R<Void> delete(@RequestBody List<Long> ids){
+        brandService.removeByIds(ids);
+        return R.ok();
+    }
 }
