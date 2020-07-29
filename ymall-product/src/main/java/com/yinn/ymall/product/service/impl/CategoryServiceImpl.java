@@ -24,7 +24,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, Category> impl
     @Cacheable(cacheNames = RedisConstant.CategoryCache.CACHE_NAME, key = RedisConstant.CategoryCache.CACHE_KEY_TREE)
     @Override
     public List<Category> listWithTree() {
-        List<Category> categoryList=new ArrayList<>();
+        List<Category> categoryList=list();
         // @formatter:off
         return list().stream()
                         .filter(e->e.getParentId()==0)//找到一级菜单
