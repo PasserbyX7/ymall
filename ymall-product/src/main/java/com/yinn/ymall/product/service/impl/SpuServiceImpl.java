@@ -23,7 +23,7 @@ import com.yinn.ymall.common.dto.SkuHasStockDTO;
 import com.yinn.ymall.product.constant.PublishStatusEnum;
 import com.yinn.ymall.product.dao.SpuDao;
 import com.yinn.ymall.product.dto.SpuDTO;
-import com.yinn.ymall.product.dto.SpuQueryDTO;
+import com.yinn.ymall.product.dto.SpuPageQueryDTO;
 import com.yinn.ymall.product.entity.Sku;
 import com.yinn.ymall.product.entity.Spu;
 import com.yinn.ymall.product.entity.SpuAttrValue;
@@ -72,7 +72,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuDao, Spu> implements SpuServi
     }
 
     @Override
-    public Page<Spu> queryPage(SpuQueryDTO spuQueryDTO) {
+    public Page<Spu> queryPage(SpuPageQueryDTO spuQueryDTO) {
         var w = Wrappers.<Spu>lambdaQuery();
         if (spuQueryDTO.getCategoryId() != null)
             w.eq(Spu::getCategoryId, spuQueryDTO.getCategoryId());

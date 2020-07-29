@@ -5,7 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.product.dto.AttrGroupDTO;
-import com.yinn.ymall.product.dto.AttrGroupQueryDTO;
+import com.yinn.ymall.product.dto.AttrGroupPageQueryDTO;
 import com.yinn.ymall.product.entity.AttrGroup;
 import com.yinn.ymall.product.service.AttrGroupService;
 
@@ -45,7 +45,7 @@ public class AttrGroupController {
 
     @ApiOperation("分页查询某分类下所有属性组")
     @GetMapping
-    public R<Page<AttrGroup>> queryPage(AttrGroupQueryDTO attrGroupQueryDTO) {
+    public R<Page<AttrGroup>> queryPage(AttrGroupPageQueryDTO attrGroupQueryDTO) {
         return R.ok(attrGroupService.queryPage(attrGroupQueryDTO));
     }
 

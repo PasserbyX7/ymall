@@ -3,7 +3,7 @@ package com.yinn.ymall.product.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yinn.ymall.product.dto.SpuDTO;
-import com.yinn.ymall.product.dto.SpuQueryDTO;
+import com.yinn.ymall.product.dto.SpuPageQueryDTO;
 import com.yinn.ymall.product.entity.Spu;
 
 /**
@@ -17,7 +17,7 @@ public interface SpuService extends IService<Spu> {
 
     void save(SpuDTO spuInputDTO);
 
-    Page<Spu> queryPage(SpuQueryDTO spuQueryDTO);
+    Page<Spu> queryPage(SpuPageQueryDTO spuQueryDTO);
 
     /**
      * 商品上架

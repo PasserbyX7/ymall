@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yinn.ymall.common.api.R;
-import com.yinn.ymall.common.dto.PageDTO;
 import com.yinn.ymall.common.validator.group.InsertGroup;
 import com.yinn.ymall.common.validator.group.UpdateGroup;
+import com.yinn.ymall.product.dto.BrandPageQueryDTO;
 import com.yinn.ymall.product.entity.Brand;
 import com.yinn.ymall.product.service.BrandService;
 
@@ -37,8 +37,8 @@ public class BrandController {
     @ApiImplicitParam(name = "key", value = "查询关键字：匹配id或首字母或品牌名（模糊匹配）")
     @ApiOperation("品牌条件分页查询")
     @GetMapping
-    public R<Page<Brand>> queryPage(PageDTO<Brand> page, String key) {
-        return R.ok(brandService.queryPage(page, key));
+    public R<Page<Brand>> queryPage(BrandPageQueryDTO brandPageQueryDTO) {
+        return R.ok(brandService.queryPage(brandPageQueryDTO));
     }
 
     @ApiOperation("列出分类下所有品牌")

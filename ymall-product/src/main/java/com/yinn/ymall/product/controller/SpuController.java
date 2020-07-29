@@ -3,7 +3,7 @@ package com.yinn.ymall.product.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.product.dto.SpuDTO;
-import com.yinn.ymall.product.dto.SpuQueryDTO;
+import com.yinn.ymall.product.dto.SpuPageQueryDTO;
 import com.yinn.ymall.product.entity.Spu;
 import com.yinn.ymall.product.service.SpuService;
 
@@ -29,7 +29,7 @@ public class SpuController {
 
     @ApiOperation("spu条件分页查询")
     @GetMapping
-    public R<Page<Spu>> queryPage(SpuQueryDTO spuQueryDTO) {
+    public R<Page<Spu>> queryPage(SpuPageQueryDTO spuQueryDTO) {
         return R.ok(spuService.queryPage(spuQueryDTO));
     }
 

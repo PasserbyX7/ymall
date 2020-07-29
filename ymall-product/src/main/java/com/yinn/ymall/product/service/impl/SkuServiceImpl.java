@@ -17,7 +17,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yinn.ymall.product.dao.SkuDao;
 import com.yinn.ymall.product.dto.ItemDTO;
 import com.yinn.ymall.product.dto.SkuDTO;
-import com.yinn.ymall.product.dto.SkuQueryDTO;
+import com.yinn.ymall.product.dto.SkuPageQueryDTO;
 import com.yinn.ymall.product.dto.SkuStockDTO;
 import com.yinn.ymall.product.entity.Sku;
 import com.yinn.ymall.product.entity.SkuImage;
@@ -61,7 +61,7 @@ public class SkuServiceImpl extends ServiceImpl<SkuDao, Sku> implements SkuServi
     }
 
     @Override
-    public Page<Sku> queryPage(SkuQueryDTO skuQueryDTO) {
+    public Page<Sku> queryPage(SkuPageQueryDTO skuQueryDTO) {
         var w = Wrappers.<Sku>lambdaQuery();
         if (skuQueryDTO.getCategoryId() != null)
             w.eq(Sku::getCategoryId, skuQueryDTO.getCategoryId());

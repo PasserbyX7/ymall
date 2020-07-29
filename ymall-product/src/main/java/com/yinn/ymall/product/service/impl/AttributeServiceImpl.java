@@ -6,7 +6,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -15,6 +14,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yinn.ymall.product.constant.AttrTypeEnum;
 import com.yinn.ymall.product.constant.SearchTypeEnum;
 import com.yinn.ymall.product.dao.AttributeDao;
+import com.yinn.ymall.product.dto.AttrPageQueryDTO;
 import com.yinn.ymall.product.entity.AttrAttrGroupRelation;
 import com.yinn.ymall.product.entity.Attribute;
 import com.yinn.ymall.product.service.AttrAttrGroupRelationService;
@@ -56,17 +56,17 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
     }
 
     @Override
-    public Page<Attribute> queryPageByCategoryId(Page<Attribute> page, String key, Long categoryId, AttrTypeEnum type) {
-        var w = Wrappers.<Attribute>lambdaQuery().eq(Attribute::getType, type);
+    public Page<Attribute> queryPage(AttrPageQueryDTO query) {
+        var w = Wrappers.<Attribute>lambdaQuery();
+        w.eq(query.getType() != null, Attribute::getType, query.getType());
+        String key = query.getKey();
         if (StringUtils.hasText(key))
             w.and(e -> e.eq(Attribute::getId, key).or().like(Attribute::getName, key));
-        if (!Objects.equals(categoryId, 0L))
-            w.eq(Attribute::getCategoryId, categoryId);
-        return page(page, w);
+        return page(query.page(), w);
     }
 
     @Override
-    public Page<Attribute> InvertListByAttrGroupId(Page<Attribute> page, String key, Long attrGroupId) {
+    public List<Attribute> InvertListByAttrGroupId(String key, Long attrGroupId) {
         // 查出属性组所属分类id
         Long categoryId = attrGroupService.getById(attrGroupId).getCategoryId();
         // 查出分类下所有规格属性
@@ -80,17 +80,20 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
                                                 .eq(Attribute::getCategoryId, categoryId)
                                                 .eq(Attribute::getType,AttrTypeEnum.SPU_TYPE);
         // @formatter:on
-        if (!CollectionUtils.isEmpty(attrIds))
-            wrapper.notIn(Attribute::getId, attrIds);
-        if (StringUtils.hasText(key))
-            wrapper.and(e -> e.eq(Attribute::getId, key).or().like(Attribute::getName, key));
-        return page(page, wrapper);
+        wrapper.notIn(!CollectionUtils.isEmpty(attrIds), Attribute::getId, attrIds);
+        wrapper.and(StringUtils.hasText(key), e -> e.eq(Attribute::getId, key).or().like(Attribute::getName, key));
+        return list(wrapper);
     }
 
     @Override
     public List<Attribute> listSearchAttrsByIds(List<Long> attrIds) {
-        return list(Wrappers.<Attribute>lambdaQuery().eq(Attribute::getSearchType, SearchTypeEnum.KEYWORD_SEARCH)
-                .in(Attribute::getId, attrIds));
+        // @formatter:off
+        return list(
+            Wrappers.<Attribute>lambdaQuery()
+                            .eq(Attribute::getSearchType, SearchTypeEnum.KEYWORD_SEARCH)
+                            .in(Attribute::getId, attrIds)
+        );
+        // @formatter:on
     }
 
 }

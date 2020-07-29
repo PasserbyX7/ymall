@@ -2,7 +2,7 @@ package com.yinn.ymall.product.dto;
 
 import java.io.Serializable;
 
-import com.yinn.ymall.common.dto.QueryDTO;
+import com.yinn.ymall.common.dto.PageQueryDTO;
 import com.yinn.ymall.product.constant.PublishStatusEnum;
 import com.yinn.ymall.product.entity.Spu;
 
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class SpuQueryDTO extends QueryDTO<Spu> implements Serializable{
+public class SpuPageQueryDTO extends PageQueryDTO<Spu> implements Serializable{
 
     private static final long serialVersionUID = 3719530212447468238L;
     private Long categoryId;

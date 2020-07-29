@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yinn.ymall.product.constant.AttrTypeEnum;
+import com.yinn.ymall.product.dto.AttrPageQueryDTO;
 import com.yinn.ymall.product.entity.Attribute;
 
 /**
@@ -17,9 +17,9 @@ import com.yinn.ymall.product.entity.Attribute;
 public interface AttributeService extends IService<Attribute> {
     List<Attribute> listByAttrGroupId(Long attrGroupId);
 
-    Page<Attribute> queryPageByCategoryId(Page<Attribute> page, String key, Long categoryId, AttrTypeEnum type);
-
-    Page<Attribute> InvertListByAttrGroupId(Page<Attribute> page, String key, Long attrGroupId);
+    List<Attribute> InvertListByAttrGroupId(String key, Long attrGroupId);
 
     List<Attribute> listSearchAttrsByIds(List<Long> attrIds);
+
+	Page<Attribute> queryPage(AttrPageQueryDTO attrPageQueryDTO);
 }

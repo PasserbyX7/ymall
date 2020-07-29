@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.yinn.ymall.product.dao.AttrGroupDao;
 import com.yinn.ymall.product.dto.AttrGroupDTO;
-import com.yinn.ymall.product.dto.AttrGroupQueryDTO;
+import com.yinn.ymall.product.dto.AttrGroupPageQueryDTO;
 import com.yinn.ymall.product.dto.ItemDTO.SpuAttrGroupDTO;
 import com.yinn.ymall.product.entity.AttrGroup;
 import com.yinn.ymall.product.service.AttrGroupService;
@@ -34,7 +34,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroup> i
      * @Date: 2020-05-03 22:14:31
      */
     @Override
-    public Page<AttrGroup> queryPage(AttrGroupQueryDTO attrGroupQueryDTO) {
+    public Page<AttrGroup> queryPage(AttrGroupPageQueryDTO attrGroupQueryDTO) {
         var w = Wrappers.<AttrGroup>lambdaQuery();
         String key=attrGroupQueryDTO.getKey();
         w.and(StringUtils.isNotBlank(key),e -> e.eq(AttrGroup::getId, key).or().like(AttrGroup::getName, key));

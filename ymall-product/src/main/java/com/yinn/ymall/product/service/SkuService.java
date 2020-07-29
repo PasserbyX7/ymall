@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yinn.ymall.product.dto.ItemDTO;
 import com.yinn.ymall.product.dto.SkuDTO;
-import com.yinn.ymall.product.dto.SkuQueryDTO;
+import com.yinn.ymall.product.dto.SkuPageQueryDTO;
 import com.yinn.ymall.product.entity.Sku;
 import com.yinn.ymall.product.entity.Spu;
 
@@ -21,7 +21,7 @@ import com.yinn.ymall.product.entity.Spu;
 public interface SkuService extends IService<Sku> {
     void save(SkuDTO skuInputDTO, Spu spu);
 
-    Page<Sku> queryPage(SkuQueryDTO skuQueryDTO);
+    Page<Sku> queryPage(SkuPageQueryDTO skuQueryDTO);
 
     List<Sku> listBySpuId(Long spuId);
 

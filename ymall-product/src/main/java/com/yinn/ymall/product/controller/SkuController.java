@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.product.dto.ItemDTO;
-import com.yinn.ymall.product.dto.SkuQueryDTO;
+import com.yinn.ymall.product.dto.SkuPageQueryDTO;
 import com.yinn.ymall.product.entity.Sku;
 import com.yinn.ymall.product.service.SkuService;
 
@@ -29,7 +29,7 @@ public class SkuController {
 
     @ApiOperation("sku条件分页查询")
     @GetMapping
-    public R<Page<Sku>> queryPage(SkuQueryDTO skuQueryDTO){
+    public R<Page<Sku>> queryPage(SkuPageQueryDTO skuQueryDTO){
             return R.ok(skuService.queryPage(skuQueryDTO));
     }
 

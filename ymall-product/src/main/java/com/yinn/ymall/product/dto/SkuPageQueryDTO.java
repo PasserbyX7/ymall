@@ -2,7 +2,7 @@ package com.yinn.ymall.product.dto;
 
 import java.io.Serializable;
 
-import com.yinn.ymall.common.dto.QueryDTO;
+import com.yinn.ymall.common.dto.PageQueryDTO;
 import com.yinn.ymall.product.entity.Sku;
 
 import lombok.Data;
@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class SkuQueryDTO extends QueryDTO<Sku> implements Serializable{
+public class SkuPageQueryDTO extends PageQueryDTO<Sku> implements Serializable{
 
     private static final long serialVersionUID = 1L;
     /**

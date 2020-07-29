@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yinn.ymall.common.api.R;
-import com.yinn.ymall.common.dto.PageDTO;
-import com.yinn.ymall.product.constant.AttrTypeEnum;
+import com.yinn.ymall.product.dto.AttrPageQueryDTO;
 import com.yinn.ymall.product.entity.Attribute;
 import com.yinn.ymall.product.service.AttributeService;
 
@@ -29,16 +28,10 @@ public class AttributeController {
     @Autowired
     private AttributeService attributeService;
 
-    @ApiOperation("分页查询某分类下销售属性")
-    @GetMapping("/categories/{categoryId}/sku")
-    public R<Page<Attribute>> querySkuPageByCategoryId(PageDTO<Attribute>page,String key,@PathVariable Long categoryId){
-        return R.ok(attributeService.queryPageByCategoryId(page.page(),key,categoryId,AttrTypeEnum.SKU_TYPE));
-    }
-
-    @ApiOperation("分页查询某分类下规格属性")
-    @GetMapping("/categories/{categoryId}/spu")
-    public R<Page<Attribute>> querySpuPageByCategoryId(PageDTO<Attribute>page,String key,@PathVariable Long categoryId){
-        return R.ok(attributeService.queryPageByCategoryId(page.page(),key,categoryId,AttrTypeEnum.SPU_TYPE));
+    @ApiOperation("属性分页查询")
+    @GetMapping
+    public R<Page<Attribute>> queryPage(AttrPageQueryDTO attrPageQueryDTO){
+        return R.ok(attributeService.queryPage(attrPageQueryDTO));
     }
 
     @ApiOperation("查询某属性组下所有属性")
@@ -47,10 +40,10 @@ public class AttributeController {
         return R.ok(attributeService.listByAttrGroupId(attrGroupId));
     }
 
-    @ApiOperation("分页查询可加入某属性组的属性")
+    @ApiOperation("查询可加入某属性组的属性")
     @GetMapping("/attrGroups/{attrGroupId}/invert")
-    public R<Page<Attribute>>InvertListByAttrGroupId(PageDTO<Attribute>page,String key,@PathVariable Long attrGroupId){
-        return R.ok(attributeService.InvertListByAttrGroupId(page.page(),key,attrGroupId));
+    public R<List<Attribute>>InvertListByAttrGroupId(String key,@PathVariable Long attrGroupId){
+        return R.ok(attributeService.InvertListByAttrGroupId(key,attrGroupId));
     }
 
     @ApiOperation("新增属性")
