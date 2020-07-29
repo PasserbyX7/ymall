@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yinn.ymall.product.dto.BrandQueryDTO;
+import com.yinn.ymall.common.dto.PageDTO;
 import com.yinn.ymall.product.entity.Brand;
 
 /**
@@ -16,7 +16,7 @@ import com.yinn.ymall.product.entity.Brand;
  */
 public interface BrandService extends IService<Brand> {
 
-	Page<Brand> queryPage(BrandQueryDTO brandQueryDTO);
+	Page<Brand> queryPage(PageDTO<Brand>page,String key);
 
 	List<Brand> listByCategoryId(Long categoryId);
 }
