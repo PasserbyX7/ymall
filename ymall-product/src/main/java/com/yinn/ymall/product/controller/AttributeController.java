@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,14 +49,14 @@ public class AttributeController {
 
     @ApiOperation("新增属性")
     @PostMapping
-    public R<Void>save(Attribute attribute){
+    public R<Void>save(@RequestBody Attribute attribute){
         attributeService.save(attribute);
         return R.ok();
     }
 
     @ApiOperation("修改属性")
     @PutMapping
-    public R<Void>update(Attribute attribute){
+    public R<Void>update(@RequestBody Attribute attribute){
         attributeService.updateById(attribute);
         return R.ok();
     }
