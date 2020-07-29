@@ -24,10 +24,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, Category> impl
     @Cacheable(cacheNames = "category",sync = true,key = "#root.methodName")
     @Override
     public List<Category> listWithTree() {
-        categoryDTOList=list()
-                                    .stream()
-                                    .map(e->e.setSort(Optional.ofNullable(e.getSort()).orElse(1)))
-                                    .collect(Collectors.toList());
         return list().stream()
                         .filter(e->e.getParentId()==0)//找到一级菜单
                         .sorted(Comparator.comparing(Category::getSort))//排序
