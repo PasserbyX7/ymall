@@ -16,23 +16,25 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableConfigurationProperties(CacheProperties.class)
 public class RedisConfiguration {
     @Bean
-    RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties){
-        var config=RedisCacheConfiguration.defaultCacheConfig();
-        //设置序列化
-        var keySerializationPair=RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer());
-        var valueSerializationPair=RedisSerializationContext.SerializationPair.fromSerializer(new GenericFastJsonRedisSerializer());
-        config=config.serializeKeysWith(keySerializationPair);
-        config=config.serializeValuesWith(valueSerializationPair);
-        //设置配置文件中的配置
-        var redisProperties=cacheProperties.getRedis();
-        if(redisProperties.getTimeToLive()!=null)
-            config=config.entryTtl(redisProperties.getTimeToLive());
-        if(redisProperties.getKeyPrefix()!=null)
-            config=config.prefixKeysWith(redisProperties.getKeyPrefix());
-        if(!redisProperties.isCacheNullValues())
-            config=config.disableCachingNullValues();
-        if(!redisProperties.isUseKeyPrefix())
-            config=config.disableKeyPrefix();
+    RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties) {
+        var config = RedisCacheConfiguration.defaultCacheConfig();
+        // 设置序列化
+        var keySerializationPair = RedisSerializationContext.SerializationPair
+                .fromSerializer(new StringRedisSerializer());
+        var valueSerializationPair = RedisSerializationContext.SerializationPair
+                .fromSerializer(new GenericFastJsonRedisSerializer());
+        config = config.serializeKeysWith(keySerializationPair);
+        config = config.serializeValuesWith(valueSerializationPair);
+        // 读取配置文件中的配置
+        var redisProperties = cacheProperties.getRedis();
+        if (redisProperties.getTimeToLive() != null)
+            config = config.entryTtl(redisProperties.getTimeToLive());
+        if (redisProperties.getKeyPrefix() != null)
+            config = config.prefixKeysWith(redisProperties.getKeyPrefix());
+        if (!redisProperties.isCacheNullValues())
+            config = config.disableCachingNullValues();
+        if (!redisProperties.isUseKeyPrefix())
+            config = config.disableKeyPrefix();
         return config;
     }
 }
