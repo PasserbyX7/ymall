@@ -7,8 +7,8 @@ import com.yinn.ymall.common.api.ErrorCode;
 import com.yinn.ymall.common.api.R;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -19,8 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @ConditionalOnProperty(prefix = "common.controllerAdvice", name = "enabled", matchIfMissing = true, havingValue = "true")
 public class ControllerAdviceConfiguration {
 
-    @ExceptionHandler(BindException.class)
-    public R<Map<String, String>> handleValidException(BindException e) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public R<Map<String, String>> handleValidException(MethodArgumentNotValidException e) {
         // @formatter:off
         var map = e.getBindingResult()
                             .getFieldErrors()

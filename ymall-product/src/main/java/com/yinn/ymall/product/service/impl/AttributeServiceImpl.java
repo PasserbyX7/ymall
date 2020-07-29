@@ -26,6 +26,7 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
 
     @Autowired
     private AttrAttrGroupRelationService attrAttrGroupRelationService;
+
     @Autowired
     private AttrGroupService attrGroupService;
 

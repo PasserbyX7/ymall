@@ -11,6 +11,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 import lombok.Data;
 
@@ -30,28 +31,29 @@ public class Brand implements Serializable {
      * 主键
      */
     @TableId
-    @NotNull(message = "修改品牌必须指定id",groups = UpdateGroup.class)
-	private Long id;
-	/**
-	 * 品牌名
-	 */
-    @NotBlank(message = "品牌名不能为空",groups = {InsertGroup.class,UpdateGroup.class})
-	private String name;
-	/**
-	 * 品牌logo
-	 */
-    @URL(message = "logo url不合法",groups = UpdateGroup.class)
-	private String logo;
-	/**
-	 * 品牌首字母
-	 */
-	private String firstLetter;
-	/**
-	 * 排序
-	 */
-	private Integer sort;
-	/**
-	 * 专区大图
-	 */
-	private String bigPic;
+    @NotNull(message = "修改品牌必须指定id", groups = UpdateGroup.class)
+    @Null(message = "新增品牌id必须为空", groups = InsertGroup.class)
+    private Long id;
+    /**
+     * 品牌名
+     */
+    @NotBlank(message = "品牌名不能为空", groups = InsertGroup.class )
+    private String name;
+    /**
+     * 品牌logo
+     */
+    @URL(message = "logo url不合法", groups = { UpdateGroup.class, InsertGroup.class })
+    private String logo;
+    /**
+     * 品牌首字母
+     */
+    private String firstLetter;
+    /**
+     * 排序
+     */
+    private Integer sort;
+    /**
+     * 专区大图
+     */
+    private String bigPic;
 }

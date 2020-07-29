@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +33,6 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
-    @ApiImplicitParam(name = "key", value = "查询关键字：匹配id或首字母或品牌名（模糊匹配）")
     @ApiOperation("品牌条件分页查询")
     @GetMapping
     public R<Page<Brand>> queryPage(BrandPageQueryDTO brandPageQueryDTO) {
