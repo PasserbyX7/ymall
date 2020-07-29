@@ -46,10 +46,6 @@ public class AttrGroupController {
     }
 
     @ApiOperation("分页查询某分类下所有属性组")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "key", value = "查询关键字：匹配分类id或属性组名"),
-        @ApiImplicitParam(name = "categoryId", value = "分类id"),
-        @ApiImplicitParam(name = "page", value = "分页查询参数")})
     @GetMapping
     public R<Page<AttrGroup>> queryPage(AttrGroupQueryDTO attrGroupQueryDTO) {
         return R.ok(attrGroupService.queryPage(attrGroupQueryDTO));

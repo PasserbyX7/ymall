@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.web.bind.annotation.PostMapping;
-
 
 @Api(tags = "商品品牌接口")
 @RestController
@@ -34,21 +34,22 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
+    @ApiImplicitParam(name = "key", value = "查询关键字：匹配id或首字母或品牌名（模糊匹配）")
     @ApiOperation("品牌条件分页查询")
     @GetMapping
-    public R<Page<Brand>> queryPage(PageDTO<Brand>page,String key){
-        return R.ok(brandService.queryPage(page,key));
+    public R<Page<Brand>> queryPage(PageDTO<Brand> page, String key) {
+        return R.ok(brandService.queryPage(page, key));
     }
 
     @ApiOperation("列出分类下所有品牌")
     @GetMapping("/categories/{categoryId}")
-    public R<List<Brand>> listByBrandId(@PathVariable Long categoryId){
+    public R<List<Brand>> listByBrandId(@PathVariable Long categoryId) {
         return R.ok(brandService.listByCategoryId(categoryId));
     }
 
     @ApiOperation("品牌查询")
     @GetMapping("/{brandId}")
-    public R<Brand> getById(@PathVariable Long brandId){
+    public R<Brand> getById(@PathVariable Long brandId) {
         return R.ok(brandService.getById(brandId));
     }
 
@@ -72,5 +73,6 @@ public class BrandController {
         brandService.removeById(brandId);
         return R.ok();
     }
+
 
 }
