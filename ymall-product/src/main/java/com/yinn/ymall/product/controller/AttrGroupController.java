@@ -72,4 +72,11 @@ public class AttrGroupController {
         return R.ok();
     }
 
+    @ApiOperation("属性组批量删除")
+    @DeleteMapping("/batch")
+    public R<Void> delete(@RequestBody List<Long> ids){
+        attrGroupService.removeByIds(ids);
+        return R.ok();
+    }
+
 }
