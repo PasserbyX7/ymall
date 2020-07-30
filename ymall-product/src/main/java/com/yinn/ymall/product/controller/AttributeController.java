@@ -73,4 +73,12 @@ public class AttributeController {
         attributeService.removeById(attributeId);
         return R.ok();
     }
+
+    @ApiOperation("属性批量删除")
+    @DeleteMapping("/batch")
+    public R<Void> delete(@RequestBody List<Long> ids){
+        attributeService.removeByIds(ids);
+        return R.ok();
+    }
+
 }
