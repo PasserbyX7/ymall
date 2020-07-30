@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,13 @@ public class AttrGroupController {
     @PostMapping
     public R<Void> save(@RequestBody AttrGroup attrGroup) {
         attrGroupService.save(attrGroup);
+        return R.ok();
+    }
+
+    @ApiOperation("修改属性组")
+    @PutMapping
+    public R<Void> update(@RequestBody AttrGroup attrGroup) {
+        attrGroupService.updateById(attrGroup);
         return R.ok();
     }
 
