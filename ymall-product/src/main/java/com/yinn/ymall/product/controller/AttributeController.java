@@ -47,6 +47,12 @@ public class AttributeController {
         return R.ok(attributeService.InvertListByAttrGroupId(key,attrGroupId));
     }
 
+    @ApiOperation("属性查询")
+    @GetMapping("/{attributeId}")
+    public R<Attribute> get(@PathVariable Long attributeId) {
+        return R.ok(attributeService.getById(attributeId));
+    }
+
     @ApiOperation("新增属性")
     @PostMapping
     public R<Void>save(@RequestBody Attribute attribute){
@@ -62,7 +68,7 @@ public class AttributeController {
     }
 
     @ApiOperation("删除属性")
-    @DeleteMapping("/attributeId")
+    @DeleteMapping("/{attributeId}")
     public R<Void>remove(@PathVariable Long attributeId){
         attributeService.removeById(attributeId);
         return R.ok();
