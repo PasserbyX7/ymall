@@ -40,8 +40,13 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
         // 保存基本数据
         baseMapper.insert(attribute);
         // 维护attr-attrGroup表
+        // @formatter:off
         attrAttrGroupRelationService.save(
-                new AttrAttrGroupRelation().setAttrGroupId(attribute.getAttrGroupId()).setAttrId(attribute.getId()));
+                new AttrAttrGroupRelation()
+                            .setAttrGroupId(attribute.getAttrGroupId())
+                            .setAttrId(attribute.getId())
+            );
+        // @formatter:on
         return true;
     }
 
@@ -63,7 +68,16 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
         String key = query.getKey();
         if (StringUtils.hasText(key))
             w.and(e -> e.eq(Attribute::getId, key).or().like(Attribute::getName, key));
-        return page(query.page(), w);
+        // @formatter:off
+        //为返回值增加attrGroupId字段值
+        var result= page(query.page(), w);
+        var records=result.getRecords()
+                                    .stream()
+                                    .map(e->e.setAttrGroupId(attrAttrGroupRelationService.getAttrGroupIdByAttrId(e.getId())))
+                                    .collect(Collectors.toList());
+        result.setRecords(records);
+        // @formatter:on
+        return result;
     }
 
     @Override

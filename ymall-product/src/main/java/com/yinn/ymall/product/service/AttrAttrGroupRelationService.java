@@ -19,6 +19,8 @@ public interface AttrAttrGroupRelationService extends IService<AttrAttrGroupRela
   * @param attrGroupId 属性组主键
   * @Date: 2020-05-23 22:04:53
   */
-	void remove(Long attrId, Long attrGroupId);
+    void remove(Long attrId, Long attrGroupId);
+
+    Long getAttrGroupIdByAttrId(Long attrId);
 }
 

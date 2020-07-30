@@ -2,6 +2,8 @@ package com.yinn.ymall.product.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
@@ -21,6 +23,16 @@ public class AttrAttrGroupRelationServiceImpl extends ServiceImpl<AttrAttrGroupR
                 .eq(AttrAttrGroupRelation::getAttrId, attrId)
                 .eq(AttrAttrGroupRelation::getAttrGroupId,attrGroupId)
         );
+        // @formatter:on
+    }
+
+    @Override
+    public Long getAttrGroupIdByAttrId(Long attrId) {
+        // @formatter:off
+        return
+            Optional.ofNullable(getOne(Wrappers.<AttrAttrGroupRelation>lambdaQuery().eq(AttrAttrGroupRelation::getAttrId, attrId)))
+                            .map(AttrAttrGroupRelation::getAttrGroupId)
+                            .orElse(null);
         // @formatter:on
     }
 }
