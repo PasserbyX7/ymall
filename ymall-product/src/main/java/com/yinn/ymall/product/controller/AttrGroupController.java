@@ -67,7 +67,7 @@ public class AttrGroupController {
 
     @ApiOperation("删除属性组")
     @DeleteMapping("/{attrGroupId}")
-    public R<Void> remove(Long attrGroupId) {
+    public R<Void> remove(@PathVariable Long attrGroupId) {
         attrGroupService.removeById(attrGroupId);
         return R.ok();
     }
