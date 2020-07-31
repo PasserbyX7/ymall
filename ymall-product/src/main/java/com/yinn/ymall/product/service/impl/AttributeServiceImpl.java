@@ -35,6 +35,7 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
     public Page<AttributeDTO> queryPage(AttrPageQueryDTO query) {
         var w = Wrappers.<Attribute>lambdaQuery();
         w.eq(query.getType() != null, Attribute::getType, query.getType());
+        w.eq(query.getCategoryId()!=null, Attribute::getCategoryId, query.getCategoryId());
         String key = query.getKey();
         if (StringUtils.hasText(key))
             w.and(e -> e.eq(Attribute::getId, key).or().like(Attribute::getName, key));

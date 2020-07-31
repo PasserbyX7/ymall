@@ -21,6 +21,9 @@ public class AttrPageQueryDTO extends PageQueryDTO<Attribute> implements Seriali
     @ApiModelProperty("查询关键字：匹配id或名称（模糊匹配）")
     private String key;
 
+    @ApiModelProperty(value="分类id",example = "1")
+    private Long categoryId;
+
     @ApiModelProperty("属性类型")
     private AttrTypeEnum type;
 }
