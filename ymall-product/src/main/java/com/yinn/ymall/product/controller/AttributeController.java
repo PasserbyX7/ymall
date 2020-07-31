@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "商品属性接口")
@@ -46,6 +47,7 @@ public class AttributeController {
         return R.ok(attributeService.listByAttrGroupId(attrGroupId));
     }
 
+    @ApiImplicitParam(name="key",value="匹配id或属性名（模糊匹配）")
     @ApiOperation("查询可加入某属性组的属性")
     @GetMapping("/attrGroups/{attrGroupId}/invert")
     public R<List<Attribute>>InvertListByAttrGroupId(String key,@PathVariable Long attrGroupId){
