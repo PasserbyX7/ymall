@@ -1,5 +1,7 @@
 package com.yinn.ymall.product.service;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yinn.ymall.product.entity.AttrAttrGroupRelation;
 
@@ -21,6 +23,11 @@ public interface AttrAttrGroupRelationService extends IService<AttrAttrGroupRela
   */
     void remove(Long attrId, Long attrGroupId);
 
-    Long getAttrGroupIdByAttrId(Long attrId);
+    void removeByAttrId(Long attrId);
+
+    void removeByAttrIds(List<Long> attrIds);
+
+    List<Long> getAttrGroupIdsByAttrId(Long attrId);
+
 }
 

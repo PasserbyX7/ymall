@@ -5,7 +5,9 @@ import java.util.List;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.product.dto.AttrPageQueryDTO;
+import com.yinn.ymall.product.dto.AttributeDTO;
 import com.yinn.ymall.product.entity.Attribute;
+import com.yinn.ymall.product.service.AttrAttrGroupRelationService;
 import com.yinn.ymall.product.service.AttributeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,12 @@ public class AttributeController {
     @Autowired
     private AttributeService attributeService;
 
+    @Autowired
+    private AttrAttrGroupRelationService attrAttrGroupRelationService;
+
     @ApiOperation("属性分页查询")
     @GetMapping
-    public R<Page<Attribute>> queryPage(AttrPageQueryDTO attrPageQueryDTO){
+    public R<Page<AttributeDTO>> queryPage(AttrPageQueryDTO attrPageQueryDTO){
         return R.ok(attributeService.queryPage(attrPageQueryDTO));
     }
 
@@ -49,8 +54,8 @@ public class AttributeController {
 
     @ApiOperation("属性查询")
     @GetMapping("/{attributeId}")
-    public R<Attribute> get(@PathVariable Long attributeId) {
-        return R.ok(attributeService.getById(attributeId));
+    public R<AttributeDTO> get(@PathVariable Long attributeId) {
+        return R.ok(AttributeDTO.convertFor(attributeService.getById(attributeId)));
     }
 
     @ApiOperation("新增属性")
@@ -71,6 +76,7 @@ public class AttributeController {
     @DeleteMapping("/{attributeId}")
     public R<Void>remove(@PathVariable Long attributeId){
         attributeService.removeById(attributeId);
+        attrAttrGroupRelationService.removeByAttrId(attributeId);
         return R.ok();
     }
 
@@ -78,6 +84,7 @@ public class AttributeController {
     @DeleteMapping("/batch")
     public R<Void> delete(@RequestBody List<Long> ids){
         attributeService.removeByIds(ids);
+        attrAttrGroupRelationService.removeByAttrIds(ids);
         return R.ok();
     }
 

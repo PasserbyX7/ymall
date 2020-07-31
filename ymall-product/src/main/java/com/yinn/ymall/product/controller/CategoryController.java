@@ -35,12 +35,6 @@ public class CategoryController {
         return R.ok(categoryService.listWithTree());
     }
 
-    @ApiOperation("分类路径查询")
-    @GetMapping("/{categoryId}/path")
-    public R<List<Long>> getCategoryPath(@PathVariable Long categoryId) {
-        return R.ok(categoryService.getCategoryPath(categoryId));
-    }
-
     @ApiOperation("分类查询")
     @GetMapping("/{categoryId}")
     public R<Category> get(@PathVariable Long categoryId) {

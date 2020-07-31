@@ -54,19 +54,7 @@
             <scope>provided</scope>
         </dependency>
         <!-- Utilities End -->
-
-        <!-- Third SDK Begin -->
-        <!-- <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>core</artifactId>
-            <version>3.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>javase</artifactId>
-            <version>3.4.0</version>
-        </dependency> -->
-        <!-- Third SDK End -->
+        
     </dependencies>
 
     <build>

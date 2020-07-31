@@ -5,6 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yinn.ymall.product.dto.AttrPageQueryDTO;
+import com.yinn.ymall.product.dto.AttributeDTO;
 import com.yinn.ymall.product.entity.Attribute;
 
 /**
@@ -21,5 +22,5 @@ public interface AttributeService extends IService<Attribute> {
 
     List<Attribute> listSearchAttrsByIds(List<Long> attrIds);
 
-	Page<Attribute> queryPage(AttrPageQueryDTO attrPageQueryDTO);
+	Page<AttributeDTO> queryPage(AttrPageQueryDTO attrPageQueryDTO);
 }

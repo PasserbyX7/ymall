@@ -15,17 +15,13 @@ import com.yinn.ymall.product.constant.AttrTypeEnum;
 import com.yinn.ymall.product.constant.SearchTypeEnum;
 import com.yinn.ymall.product.dao.AttributeDao;
 import com.yinn.ymall.product.dto.AttrPageQueryDTO;
-import com.yinn.ymall.product.entity.AttrAttrGroupRelation;
+import com.yinn.ymall.product.dto.AttributeDTO;
 import com.yinn.ymall.product.entity.Attribute;
-import com.yinn.ymall.product.service.AttrAttrGroupRelationService;
 import com.yinn.ymall.product.service.AttrGroupService;
 import com.yinn.ymall.product.service.AttributeService;
 
 @Service
 public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> implements AttributeService {
-
-    @Autowired
-    private AttrAttrGroupRelationService attrAttrGroupRelationService;
 
     @Autowired
     private AttrGroupService attrGroupService;
@@ -36,48 +32,13 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
     }
 
     @Override
-    public boolean save(Attribute attribute) {
-        // 保存基本数据
-        baseMapper.insert(attribute);
-        // 维护attr-attrGroup表
-        // @formatter:off
-        attrAttrGroupRelationService.save(
-                new AttrAttrGroupRelation()
-                            .setAttrGroupId(attribute.getAttrGroupId())
-                            .setAttrId(attribute.getId())
-            );
-        // @formatter:on
-        return true;
-    }
-
-    @Override
-    public boolean updateById(Attribute attribute) {
-        // 修改基本数据
-        baseMapper.updateById(attribute);
-        // 维护attr-attrGroup表
-        attrAttrGroupRelationService.update(Wrappers.<AttrAttrGroupRelation>lambdaUpdate()
-                .set(AttrAttrGroupRelation::getAttrGroupId, attribute.getAttrGroupId())
-                .eq(AttrAttrGroupRelation::getAttrId, attribute.getId()));
-        return true;
-    }
-
-    @Override
-    public Page<Attribute> queryPage(AttrPageQueryDTO query) {
+    public Page<AttributeDTO> queryPage(AttrPageQueryDTO query) {
         var w = Wrappers.<Attribute>lambdaQuery();
         w.eq(query.getType() != null, Attribute::getType, query.getType());
         String key = query.getKey();
         if (StringUtils.hasText(key))
             w.and(e -> e.eq(Attribute::getId, key).or().like(Attribute::getName, key));
-        // @formatter:off
-        //为返回值增加attrGroupId字段值
-        var result= page(query.page(), w);
-        var records=result.getRecords()
-                                    .stream()
-                                    .map(e->e.setAttrGroupId(attrAttrGroupRelationService.getAttrGroupIdByAttrId(e.getId())))
-                                    .collect(Collectors.toList());
-        result.setRecords(records);
-        // @formatter:on
-        return result;
+        return (Page<AttributeDTO>)page(query.page(), w).convert(AttributeDTO::convertFor);
     }
 
     @Override

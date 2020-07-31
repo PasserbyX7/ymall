@@ -1,6 +1,5 @@
 package com.yinn.ymall.product.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.yinn.ymall.product.constant.AttrTypeEnum;
@@ -57,10 +56,4 @@ public class Attribute implements Serializable {
 	 * 是否启用
 	 */
 	private Boolean isEnable;
-
-    /**
-     * 属性对应属性组
-     */
-    @TableField(exist = false)
-    private Long attrGroupId;
 }

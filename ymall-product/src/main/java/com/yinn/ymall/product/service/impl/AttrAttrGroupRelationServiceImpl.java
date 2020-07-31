@@ -2,7 +2,8 @@ package com.yinn.ymall.product.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -27,12 +28,32 @@ public class AttrAttrGroupRelationServiceImpl extends ServiceImpl<AttrAttrGroupR
     }
 
     @Override
-    public Long getAttrGroupIdByAttrId(Long attrId) {
+    public List<Long> getAttrGroupIdsByAttrId(Long attrId) {
         // @formatter:off
-        return
-            Optional.ofNullable(getOne(Wrappers.<AttrAttrGroupRelation>lambdaQuery().eq(AttrAttrGroupRelation::getAttrId, attrId)))
-                            .map(AttrAttrGroupRelation::getAttrGroupId)
-                            .orElse(null);
+        return list(Wrappers.<AttrAttrGroupRelation>lambdaQuery().eq(AttrAttrGroupRelation::getAttrId, attrId))
+                    .stream()
+                    .map(AttrAttrGroupRelation::getAttrGroupId)
+                    .collect(Collectors.toList());
+        // @formatter:on
+    }
+
+    @Override
+    public void removeByAttrId(Long attrId) {
+        // @formatter:off
+        remove(
+            Wrappers.<AttrAttrGroupRelation>lambdaQuery()
+                .eq(AttrAttrGroupRelation::getAttrId, attrId)
+        );
+        // @formatter:on
+    }
+
+    @Override
+    public void removeByAttrIds(List<Long> attrIds) {
+        // @formatter:off
+        remove(
+            Wrappers.<AttrAttrGroupRelation>lambdaQuery()
+                .in(AttrAttrGroupRelation::getAttrId, attrIds)
+        );
         // @formatter:on
     }
 }
