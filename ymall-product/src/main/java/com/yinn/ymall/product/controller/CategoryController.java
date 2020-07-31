@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @Api(tags = "商品分类接口")
 @RestController
 @RequestMapping("/api/product/v1/categories")
@@ -39,6 +38,12 @@ public class CategoryController {
     @GetMapping("/{categoryId}")
     public R<Category> get(@PathVariable Long categoryId) {
         return R.ok(categoryService.getById(categoryId));
+    }
+
+    @ApiOperation("分类路径查询")
+    @GetMapping("/{categoryId}/path")
+    public R<List<Long>> getCategoryPath(@PathVariable Long categoryId) {
+        return R.ok(categoryService.getCategoryPath(categoryId));
     }
 
     @ApiOperation("分类新增")
@@ -64,14 +69,14 @@ public class CategoryController {
 
     @ApiOperation("分类删除")
     @DeleteMapping("/{id}")
-    public R<Void> delete(@PathVariable Long id){
+    public R<Void> delete(@PathVariable Long id) {
         categoryService.removeById(id);
         return R.ok();
     }
 
     @ApiOperation("分类批量删除")
     @DeleteMapping("/batch")
-    public R<Void> delete(@RequestBody List<Long> ids){
+    public R<Void> delete(@RequestBody List<Long> ids) {
         categoryService.removeByIds(ids);
         return R.ok();
     }
