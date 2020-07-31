@@ -12,12 +12,14 @@ import com.yinn.ymall.product.service.CategoryService;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain=true)
+@Component
 public class AttributeDTO implements Serializable {
 
     private static final long serialVersionUID = 1744712802894381218L;
@@ -62,11 +64,19 @@ public class AttributeDTO implements Serializable {
      */
     private List<Long> categoryPath;
 
-    public static AttributeDTO convertFor(Attribute Attribute) {
-        return new AttributeDTOConverter().doBackward(Attribute,null);
+    private static AttributeDTOConverter attributeDTOConverter;
+
+    @Autowired
+    public void setAttributeDTOConverter(AttributeDTOConverter attributeDTOConverter) {
+        AttributeDTO.attributeDTOConverter = attributeDTOConverter;
     }
 
-    private static class AttributeDTOConverter implements Convert<AttributeDTO, Attribute> {
+    public static AttributeDTO convertFor(Attribute Attribute) {
+        return attributeDTOConverter.doBackward(Attribute,null);
+    }
+
+    @Component
+    public static class AttributeDTOConverter implements Convert<AttributeDTO, Attribute> {
 
         @Autowired
         private AttrAttrGroupRelationService attrAttrGroupRelationService;
@@ -77,7 +87,7 @@ public class AttributeDTO implements Serializable {
         @Override
         public AttributeDTO doBackward(Attribute attribute, Class<AttributeDTO> clazz) {
             var attributeDTO=new AttributeDTO();
-            BeanUtils.copyProperties(attributeDTO, attribute);
+            BeanUtils.copyProperties(attribute,attributeDTO);
             attributeDTO.setAttrGroupId(attrAttrGroupRelationService.getAttrGroupIdsByAttrId(attribute.getId()));
             attributeDTO.setCategoryPath(categoryService.getCategoryPath(attribute.getCategoryId()));
             return attributeDTO;
