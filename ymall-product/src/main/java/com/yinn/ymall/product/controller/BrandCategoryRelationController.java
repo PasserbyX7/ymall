@@ -10,11 +10,15 @@ import java.util.List;
 
 import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.product.dto.BrandCategoryRelationDTO;
+import com.yinn.ymall.product.entity.BrandCategoryRelation;
 import com.yinn.ymall.product.service.BrandCategoryRelationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Api(tags = "商品品牌-分类关联接口")
@@ -29,6 +33,20 @@ public class BrandCategoryRelationController {
     @GetMapping("/brands/{brandId}")
     public R<List<BrandCategoryRelationDTO>> listByBrandId(@PathVariable Long brandId){
         return R.ok(brandCategoryRelationService.listByBrandId(brandId));
+    }
+
+    @ApiOperation("新增品牌-分类关联")
+    @PostMapping
+    public R<Void>save(@RequestBody BrandCategoryRelation brandCategoryRelation){
+        brandCategoryRelationService.save(brandCategoryRelation);
+        return R.ok();
+    }
+
+    @ApiOperation("删除品牌-分类关联")
+    @DeleteMapping("/{id}")
+    public R<Void>remove(@PathVariable Long id){
+        brandCategoryRelationService.removeById(id);
+        return R.ok();
     }
 
 }

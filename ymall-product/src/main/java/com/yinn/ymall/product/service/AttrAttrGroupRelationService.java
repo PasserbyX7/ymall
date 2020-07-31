@@ -14,15 +14,6 @@ import com.yinn.ymall.product.entity.AttrAttrGroupRelation;
  */
 public interface AttrAttrGroupRelationService extends IService<AttrAttrGroupRelation> {
 
- /**
-  * 根据属性id和属性组id删除对应关联关系
-  *
-  * @param attrId 属性主键
-  * @param attrGroupId 属性组主键
-  * @Date: 2020-05-23 22:04:53
-  */
-    void remove(Long attrId, Long attrGroupId);
-
     void removeByAttrId(Long attrId);
 
     void removeByAttrIds(List<Long> attrIds);

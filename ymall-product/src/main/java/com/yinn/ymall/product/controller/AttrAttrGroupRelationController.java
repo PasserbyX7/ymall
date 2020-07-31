@@ -31,9 +31,9 @@ public class AttrAttrGroupRelationController {
     }
 
     @ApiOperation("删除属性-属性组关联")
-    @DeleteMapping("/attr/{attrId}/attrGroup/{attrGroupId}")
-    public R<Void>remove(@PathVariable Long attrId,@PathVariable Long attrGroupId){
-        attrAttrGroupRelationService.remove(attrId,attrGroupId);
+    @DeleteMapping("/{id}")
+    public R<Void>remove(@PathVariable Long id){
+        attrAttrGroupRelationService.removeById(id);
         return R.ok();
     }
 

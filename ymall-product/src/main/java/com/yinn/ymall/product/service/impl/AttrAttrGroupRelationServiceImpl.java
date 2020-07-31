@@ -17,17 +17,6 @@ import com.yinn.ymall.product.service.AttrAttrGroupRelationService;
 public class AttrAttrGroupRelationServiceImpl extends ServiceImpl<AttrAttrGroupRelationDao, AttrAttrGroupRelation> implements AttrAttrGroupRelationService {
 
     @Override
-    public void remove(Long attrId, Long attrGroupId) {
-        // @formatter:off
-        remove(
-            Wrappers.<AttrAttrGroupRelation>lambdaQuery()
-                .eq(AttrAttrGroupRelation::getAttrId, attrId)
-                .eq(AttrAttrGroupRelation::getAttrGroupId,attrGroupId)
-        );
-        // @formatter:on
-    }
-
-    @Override
     public List<Long> getAttrGroupIdsByAttrId(Long attrId) {
         // @formatter:off
         return list(Wrappers.<AttrAttrGroupRelation>lambdaQuery().eq(AttrAttrGroupRelation::getAttrId, attrId))
