@@ -20,5 +20,7 @@ public interface AttrAttrGroupRelationService extends IService<AttrAttrGroupRela
 
     List<Long> getAttrGroupIdsByAttrId(Long attrId);
 
+    List<Long> getAttrIdsByAttrGroupId(Long attrGroupId);
+
 }
 

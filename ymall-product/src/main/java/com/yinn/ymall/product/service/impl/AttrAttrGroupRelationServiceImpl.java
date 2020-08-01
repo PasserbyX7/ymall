@@ -45,4 +45,14 @@ public class AttrAttrGroupRelationServiceImpl extends ServiceImpl<AttrAttrGroupR
         );
         // @formatter:on
     }
+
+    @Override
+    public List<Long> getAttrIdsByAttrGroupId(Long attrGroupId) {
+        // @formatter:off
+        return list(Wrappers.<AttrAttrGroupRelation>lambdaQuery().eq(AttrAttrGroupRelation::getAttrGroupId, attrGroupId))
+                    .stream()
+                    .map(AttrAttrGroupRelation::getAttrGroupId)
+                    .collect(Collectors.toList());
+        // @formatter:on
+    }
 }

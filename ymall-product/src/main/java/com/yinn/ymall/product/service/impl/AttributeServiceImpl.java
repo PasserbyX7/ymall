@@ -17,6 +17,7 @@ import com.yinn.ymall.product.dao.AttributeDao;
 import com.yinn.ymall.product.dto.AttrPageQueryDTO;
 import com.yinn.ymall.product.dto.AttributeDTO;
 import com.yinn.ymall.product.entity.Attribute;
+import com.yinn.ymall.product.service.AttrAttrGroupRelationService;
 import com.yinn.ymall.product.service.AttrGroupService;
 import com.yinn.ymall.product.service.AttributeService;
 
@@ -25,6 +26,9 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
 
     @Autowired
     private AttrGroupService attrGroupService;
+
+    @Autowired
+    private AttrAttrGroupRelationService attrAttrGroupRelationService;
 
     @Override
     public List<Attribute> listByAttrGroupId(Long attrGroupId) {
@@ -35,11 +39,11 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
     public Page<AttributeDTO> queryPage(AttrPageQueryDTO query) {
         var w = Wrappers.<Attribute>lambdaQuery();
         w.eq(query.getType() != null, Attribute::getType, query.getType());
-        w.eq(query.getCategoryId()!=null, Attribute::getCategoryId, query.getCategoryId());
+        w.eq(query.getCategoryId() != null, Attribute::getCategoryId, query.getCategoryId());
         String key = query.getKey();
         if (StringUtils.hasText(key))
             w.and(e -> e.eq(Attribute::getId, key).or().like(Attribute::getName, key));
-        return (Page<AttributeDTO>)page(query.page(), w).convert(AttributeDTO::convertFor);
+        return (Page<AttributeDTO>) page(query.page(), w).convert(AttributeDTO::convertFor);
     }
 
     @Override
@@ -48,14 +52,10 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
         Long categoryId = attrGroupService.getById(attrGroupId).getCategoryId();
         // 查出分类下所有规格属性
         // @formatter:off
-        var attrIds = list(Wrappers.<Attribute>lambdaQuery().eq(Attribute::getCategoryId, categoryId)
-                                .eq(Attribute::getType, AttrTypeEnum.SPU_TYPE))
-                                .stream()
-                                .map(Attribute::getId)
-                                .collect(Collectors.toList());
+        var attrIds = attrAttrGroupRelationService.getAttrIdsByAttrGroupId(attrGroupId);
         var wrapper = Wrappers.<Attribute>lambdaQuery()
                                                 .eq(Attribute::getCategoryId, categoryId)
-                                                .eq(Attribute::getType,AttrTypeEnum.SPU_TYPE);
+                                                .eq(Attribute::getType, AttrTypeEnum.SPU_TYPE);
         // @formatter:on
         wrapper.notIn(!CollectionUtils.isEmpty(attrIds), Attribute::getId, attrIds);
         wrapper.and(StringUtils.hasText(key), e -> e.eq(Attribute::getId, key).or().like(Attribute::getName, key));
