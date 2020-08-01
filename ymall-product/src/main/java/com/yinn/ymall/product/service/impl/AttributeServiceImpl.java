@@ -2,6 +2,7 @@ package com.yinn.ymall.product.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -73,14 +74,16 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
         // @formatter:on
     }
 
+    @Transactional
     @Override
     public void save(AttributeDTO attributeDTO) {
         var attribute=attributeDTO.convertToAttribute();
         save(attribute);
         var attrId=attribute.getId();
-        attributeDTO.getAttrGroupId().forEach(attrGroupId->{
-            attrAttrGroupRelationService.save(new AttrAttrGroupRelation().setAttrGroupId(attrGroupId).setAttrId(attrId));
-        });
+        if(attributeDTO.getAttrGroupId()!=null)
+            attributeDTO.getAttrGroupId().forEach(attrGroupId->{
+                attrAttrGroupRelationService.save(new AttrAttrGroupRelation().setAttrGroupId(attrGroupId).setAttrId(attrId));
+            });
     }
 
 }
