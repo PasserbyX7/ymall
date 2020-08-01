@@ -15,6 +15,7 @@ import com.yinn.ymall.product.constant.SearchTypeEnum;
 import com.yinn.ymall.product.dao.AttributeDao;
 import com.yinn.ymall.product.dto.AttrPageQueryDTO;
 import com.yinn.ymall.product.dto.AttributeDTO;
+import com.yinn.ymall.product.entity.AttrAttrGroupRelation;
 import com.yinn.ymall.product.entity.Attribute;
 import com.yinn.ymall.product.service.AttrAttrGroupRelationService;
 import com.yinn.ymall.product.service.AttrGroupService;
@@ -70,6 +71,16 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
                             .in(Attribute::getId, attrIds)
         );
         // @formatter:on
+    }
+
+    @Override
+    public void save(AttributeDTO attributeDTO) {
+        var attribute=attributeDTO.convertToAttribute();
+        save(attribute);
+        var attrId=attribute.getId();
+        attributeDTO.getAttrGroupId().forEach(attrGroupId->{
+            attrAttrGroupRelationService.save(new AttrAttrGroupRelation().setAttrGroupId(attrGroupId).setAttrId(attrId));
+        });
     }
 
 }

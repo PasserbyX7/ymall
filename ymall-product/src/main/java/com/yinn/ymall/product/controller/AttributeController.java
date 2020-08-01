@@ -62,8 +62,8 @@ public class AttributeController {
 
     @ApiOperation("新增属性")
     @PostMapping
-    public R<Void>save(@RequestBody Attribute attribute){
-        attributeService.save(attribute);
+    public R<Void>save(@RequestBody AttributeDTO attributeDTO){
+        attributeService.save(attributeDTO);
         return R.ok();
     }
 

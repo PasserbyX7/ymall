@@ -23,4 +23,6 @@ public interface AttributeService extends IService<Attribute> {
     List<Attribute> listSearchAttrsByIds(List<Long> attrIds);
 
 	Page<AttributeDTO> queryPage(AttrPageQueryDTO attrPageQueryDTO);
+
+	void save(AttributeDTO attributeDTO);
 }

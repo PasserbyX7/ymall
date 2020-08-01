@@ -71,6 +71,10 @@ public class AttributeDTO implements Serializable {
         AttributeDTO.attributeDTOConverter = attributeDTOConverter;
     }
 
+    public Attribute convertToAttribute(){
+        return attributeDTOConverter.doForward(this, Attribute.class);
+    }
+
     public static AttributeDTO convertFor(Attribute Attribute) {
         return attributeDTOConverter.doBackward(Attribute,null);
     }
