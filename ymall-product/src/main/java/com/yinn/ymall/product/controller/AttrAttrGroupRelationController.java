@@ -1,5 +1,7 @@
 package com.yinn.ymall.product.controller;
 
+import java.util.List;
+
 import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.product.entity.AttrAttrGroupRelation;
 import com.yinn.ymall.product.service.AttrAttrGroupRelationService;
@@ -30,6 +32,13 @@ public class AttrAttrGroupRelationController {
         return R.ok();
     }
 
+    @ApiOperation("属性-属性组关联批量增加")
+    @PostMapping("/batch")
+    public R<Void> save(@RequestBody List<AttrAttrGroupRelation> attrAttrGroupRelations){
+        attrAttrGroupRelationService.saveBatch(attrAttrGroupRelations);
+        return R.ok();
+    }
+
     @ApiOperation("删除属性-属性组关联")
     @DeleteMapping("/{id}")
     public R<Void>remove(@PathVariable Long id){
@@ -37,4 +46,10 @@ public class AttrAttrGroupRelationController {
         return R.ok();
     }
 
+    @ApiOperation("属性-属性组关联批量删除")
+    @DeleteMapping("/batch")
+    public R<Void> delete(@RequestBody List<Long> ids){
+        attrAttrGroupRelationService.removeByIds(ids);
+        return R.ok();
+    }
 }
