@@ -7,6 +7,7 @@ import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.product.dto.AttrGroupDTO;
 import com.yinn.ymall.product.dto.AttrGroupPageQueryDTO;
 import com.yinn.ymall.product.entity.AttrGroup;
+import com.yinn.ymall.product.service.AttrAttrGroupRelationService;
 import com.yinn.ymall.product.service.AttrGroupService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class AttrGroupController {
 
     @Autowired
     private AttrGroupService attrGroupService;
+
+    @Autowired
+    private AttrAttrGroupRelationService attrAttrGroupRelationService;
 
     @ApiOperation("查询属性")
     @GetMapping("/{attrGroupId}")
@@ -69,12 +73,14 @@ public class AttrGroupController {
     @DeleteMapping("/{attrGroupId}")
     public R<Void> remove(@PathVariable Long attrGroupId) {
         attrGroupService.removeById(attrGroupId);
+        attrAttrGroupRelationService.removeByAttrGroupId(attrGroupId);
         return R.ok();
     }
 
     @ApiOperation("属性组批量删除")
     @DeleteMapping("/batch")
     public R<Void> delete(@RequestBody List<Long> ids){
+        attrAttrGroupRelationService.removeByAttrGroupIds(ids);
         attrGroupService.removeByIds(ids);
         return R.ok();
     }

@@ -55,4 +55,24 @@ public class AttrAttrGroupRelationServiceImpl extends ServiceImpl<AttrAttrGroupR
                     .collect(Collectors.toList());
         // @formatter:on
     }
+
+    @Override
+    public void removeByAttrGroupId(Long attrGroupId) {
+        // @formatter:off
+        remove(
+            Wrappers.<AttrAttrGroupRelation>lambdaQuery()
+                .eq(AttrAttrGroupRelation::getAttrGroupId, attrGroupId)
+        );
+        // @formatter:on
+    }
+
+    @Override
+    public void removeByAttrGroupIds(List<Long> attrGroupIds) {
+        // @formatter:off
+        remove(
+            Wrappers.<AttrAttrGroupRelation>lambdaQuery()
+                .in(AttrAttrGroupRelation::getAttrGroupId, attrGroupIds)
+        );
+        // @formatter:on
+    }
 }

@@ -18,6 +18,10 @@ public interface AttrAttrGroupRelationService extends IService<AttrAttrGroupRela
 
     void removeByAttrIds(List<Long> attrIds);
 
+    void removeByAttrGroupId(Long attrGroupId);
+
+    void removeByAttrGroupIds(List<Long> attrGroupIds);
+
     List<Long> getAttrGroupIdsByAttrId(Long attrId);
 
     List<Long> getAttrIdsByAttrGroupId(Long attrGroupId);
