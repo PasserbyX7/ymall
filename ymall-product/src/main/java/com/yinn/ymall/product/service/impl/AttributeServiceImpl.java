@@ -86,4 +86,13 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
             });
     }
 
+    @Override
+    public void updateById(AttributeDTO attributeDTO) {
+        updateById(attributeDTO.convertToAttribute());
+        if(attributeDTO.getAttrGroupId()!=null)
+            attributeDTO.getAttrGroupId().forEach(attrGroupId->{
+                attrAttrGroupRelationService.save(new AttrAttrGroupRelation().setAttrGroupId(attrGroupId).setAttrId(attributeDTO.getId()));
+            });
+    }
+
 }

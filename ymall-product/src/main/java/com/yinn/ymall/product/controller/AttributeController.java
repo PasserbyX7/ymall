@@ -69,8 +69,8 @@ public class AttributeController {
 
     @ApiOperation("修改属性")
     @PutMapping
-    public R<Void>update(@RequestBody Attribute attribute){
-        attributeService.updateById(attribute);
+    public R<Void>update(@RequestBody AttributeDTO attributeDTO){
+        attributeService.updateById(attributeDTO);
         return R.ok();
     }
 
