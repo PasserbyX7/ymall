@@ -46,6 +46,20 @@ public class AttrAttrGroupRelationController {
         return R.ok();
     }
 
+    @ApiOperation("通过attrId删除属性-属性组关联")
+    @DeleteMapping("/attrs/{id}")
+    public R<Void>removeByAttrId(@PathVariable Long id){
+        attrAttrGroupRelationService.removeByAttrId(id);
+        return R.ok();
+    }
+
+    @ApiOperation("通过attrId批量删除属性-属性组关联")
+    @DeleteMapping("/attrs")
+    public R<Void>removeByAttrId(@RequestBody List<Long> ids){
+        attrAttrGroupRelationService.removeByAttrIds(ids);
+        return R.ok();
+    }
+
     @ApiOperation("属性-属性组关联批量删除")
     @DeleteMapping("/batch")
     public R<Void> delete(@RequestBody List<Long> ids){
