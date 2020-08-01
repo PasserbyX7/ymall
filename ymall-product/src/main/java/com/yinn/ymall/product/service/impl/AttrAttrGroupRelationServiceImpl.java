@@ -51,7 +51,8 @@ public class AttrAttrGroupRelationServiceImpl extends ServiceImpl<AttrAttrGroupR
         // @formatter:off
         return list(Wrappers.<AttrAttrGroupRelation>lambdaQuery().eq(AttrAttrGroupRelation::getAttrGroupId, attrGroupId))
                     .stream()
-                    .map(AttrAttrGroupRelation::getAttrGroupId)
+                    .map(AttrAttrGroupRelation::getAttrId)
+                    .distinct()
                     .collect(Collectors.toList());
         // @formatter:on
     }
