@@ -7,6 +7,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -53,14 +54,17 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeDao, Attribute> i
         Long categoryId = attrGroupService.getById(attrGroupId).getCategoryId();
         // 查出分类下所有规格属性
         // @formatter:off
-        var attrIds = attrAttrGroupRelationService.getAttrIdsByAttrGroupId(attrGroupId);
         var wrapper = Wrappers.<Attribute>lambdaQuery()
                                                 .eq(Attribute::getCategoryId, categoryId)
                                                 .eq(Attribute::getType, AttrTypeEnum.SPU_TYPE);
-        // @formatter:on
+        var attrIds = attrAttrGroupRelationService.getAttrIdsByAttrGroupId(attrGroupId);
         wrapper.notIn(!CollectionUtils.isEmpty(attrIds), Attribute::getId, attrIds);
         wrapper.and(StringUtils.hasText(key), e -> e.eq(Attribute::getId, key).or().like(Attribute::getName, key));
-        return list(wrapper);
+        return list(wrapper)
+                        .stream()
+                        .filter(e->attrAttrGroupRelationService.getAttrGroupIdsByAttrId(e.getId()).isEmpty())
+                        .collect(Collectors.toList());
+        // @formatter:on
     }
 
     @Override
