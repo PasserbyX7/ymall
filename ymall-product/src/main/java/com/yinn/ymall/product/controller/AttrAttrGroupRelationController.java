@@ -66,4 +66,5 @@ public class AttrAttrGroupRelationController {
         attrAttrGroupRelationService.removeByIds(ids);
         return R.ok();
     }
+
 }
