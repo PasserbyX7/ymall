@@ -60,14 +60,13 @@ public class SpuServiceImpl extends ServiceImpl<SpuDao, Spu> implements SpuServi
     @Transactional
     @Override
     public void save(SpuDTO spuDTO) {
-        // 保存spu
-        // 保存基本信息
+        // 保存spu基本信息
         var spu = spuDTO.convertToSpu();
         save(spu);
         Long spuId = spu.getId();
-        // 保存规格参数
+        // 保存spuAttr信息
         spuAttrValueService.saveBatch(spuDTO.getSpuAttrs(), spuId);
-        // 保存sku
+        // 保存sku信息
         spuDTO.getSkuDTOs().forEach(sku -> skuService.save(sku, spu));
     }
 
