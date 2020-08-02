@@ -68,7 +68,7 @@ public class Spu implements Serializable {
     /**
      * 审核状态：0->新建；1->过审；2->未过审
      */
-    private VerifyStatusEnum verifyStatusEnum;
+    private VerifyStatusEnum verifyStatus;
 	/**
 	 * 创建时间
 	 */

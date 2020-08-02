@@ -74,12 +74,9 @@ public class SpuServiceImpl extends ServiceImpl<SpuDao, Spu> implements SpuServi
     @Override
     public Page<Spu> queryPage(SpuPageQueryDTO spuQueryDTO) {
         var w = Wrappers.<Spu>lambdaQuery();
-        if (spuQueryDTO.getCategoryId() != null)
-            w.eq(Spu::getCategoryId, spuQueryDTO.getCategoryId());
-        if (spuQueryDTO.getBrandId() != null)
-            w.eq(Spu::getBrandId, spuQueryDTO.getBrandId());
-        if (spuQueryDTO.getPublishStatus() != null)
-            w.eq(Spu::getPublishStatus, spuQueryDTO.getPublishStatus());
+        w.eq(spuQueryDTO.getCategoryId() != null, Spu::getCategoryId, spuQueryDTO.getCategoryId());
+        w.eq(spuQueryDTO.getBrandId() != null, Spu::getBrandId, spuQueryDTO.getBrandId());
+        w.eq(spuQueryDTO.getPublishStatus() != null, Spu::getPublishStatus, spuQueryDTO.getPublishStatus());
         String key = spuQueryDTO.getKey();
         if (StringUtils.isNoneBlank(key))
             w.and(e -> e.eq(Spu::getId, key).or().like(Spu::getName, key));
