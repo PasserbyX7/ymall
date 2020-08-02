@@ -8,13 +8,17 @@ import com.yinn.ymall.product.entity.SpuAttrValue;
 import lombok.Data;
 
 @Data
-public class SpuAttrValueDTO implements Serializable{
+public class SpuAttrValueDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
      * 属性id
      */
     private Long attrId;
+    /**
+     * 属性名
+     */
+    private String attrName;
     /**
      * 属性值
      */

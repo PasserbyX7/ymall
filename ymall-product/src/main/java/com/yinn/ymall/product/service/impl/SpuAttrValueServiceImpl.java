@@ -59,7 +59,6 @@ public class SpuAttrValueServiceImpl extends ServiceImpl<SpuAttrValueDao, SpuAtt
         var spuAttrValues=spuAttrs.stream()
                                             .map(SpuAttrValueDTO::convertToSpuAttrValue)
                                             .map(e -> e.setSpuId(spuId))
-                                            .map(e -> e.setAttrName(attributeService.getById(e.getAttrId()).getName()))
                                             .collect(Collectors.toList());
         // @formatter:on
         saveBatch(spuAttrValues);
