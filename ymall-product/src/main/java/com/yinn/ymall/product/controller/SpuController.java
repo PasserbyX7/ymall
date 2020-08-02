@@ -41,8 +41,8 @@ public class SpuController {
 
     @ApiOperation("spu新增")
     @PostMapping
-    public R<Void> save(@RequestBody SpuDTO spuInputDTO) {
-        spuService.save(spuInputDTO);
+    public R<Void> save(@RequestBody SpuDTO spuDTO) {
+        spuService.save(spuDTO);
         return R.ok();
     }
 

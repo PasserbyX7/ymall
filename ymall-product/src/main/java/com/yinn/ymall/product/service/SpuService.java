@@ -15,7 +15,7 @@ import com.yinn.ymall.product.entity.Spu;
  */
 public interface SpuService extends IService<Spu> {
 
-    void save(SpuDTO spuInputDTO);
+    void save(SpuDTO spuDTO);
 
     Page<Spu> queryPage(SpuPageQueryDTO spuQueryDTO);
 
