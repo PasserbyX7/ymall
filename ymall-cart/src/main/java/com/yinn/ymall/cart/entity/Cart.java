@@ -14,7 +14,6 @@ import lombok.experimental.Accessors;
  * 总结：Map<String,Map<String,Item>>
  *
  * @author Passerby
- * @since 1.0
  */
 @Data
 @Accessors(chain = true)

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
 * 统一异常处理类
 * @author Passerby
-* @since 1.0
 */
 @RestControllerAdvice
 public class ExceptionControllerAdvice {

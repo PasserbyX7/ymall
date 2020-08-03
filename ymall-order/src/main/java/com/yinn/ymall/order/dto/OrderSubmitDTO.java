@@ -11,7 +11,6 @@ import lombok.Data;
  * 订单提交DTO 无需提交要购买的商品，直接在购物车进行查询
  *
  * @author Passerby
- * @since 1.0
  */
 @Data
 public class OrderSubmitDTO implements Serializable {

@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
 * 统一异常处理类
 * @author Passerby
-* @since 1.0
 */
 @Slf4j
 @RestControllerAdvice

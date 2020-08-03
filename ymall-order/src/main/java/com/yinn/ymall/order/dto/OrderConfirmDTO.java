@@ -9,7 +9,6 @@ import lombok.Data;
  * 订单确认页所需数据
  *
  * @author Passerby
- * @since 1.0
  */
 @Data
 public class OrderConfirmDTO implements Serializable{

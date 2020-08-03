@@ -12,7 +12,6 @@ import lombok.experimental.Accessors;
  * REST API 返回结果
  *
  * @author Passerby
- * @since 1.0
  */
 @Data
 @Accessors(chain = true)
