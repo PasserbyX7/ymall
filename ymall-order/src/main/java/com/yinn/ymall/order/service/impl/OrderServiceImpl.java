@@ -127,10 +127,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
         var order = getByOrderSn(orderSn);
         if (order == null || order.getStatus() != OrderStatusEnum.PENDING_PAYMENT)
             throw new OrderPaymentException();
-        var paymentInfo=getPaymentInfo(order);
-        var paymentInfoDTO=PaymentInfoDTO.convertFrom(paymentInfo).setOpenId(openId);
+        // TODO 为啥要进行order->paymentInfo->paymentInfoDTO的转换，不能直接一步到位吗？
+        var paymentInfo = getPaymentInfo(order);
+        var paymentInfoDTO = PaymentInfoDTO.convertFrom(paymentInfo).setOpenId(openId);
         paymentInfoService.save(paymentInfo);
-        return paymentFeignService.wxMiniPay(paymentInfoDTO).getData();
+        return paymentFeignService.wxMiniPay(paymentInfoDTO).getData();// TODO 远程调用出错处理
     }
 
     @Override
@@ -140,15 +141,15 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
 
     @Override
     public void orderPaid(OrderPaidDTO orderPaidDTO) {
-        var orderSn=orderPaidDTO.getOrderSn();
-        var paymentInfo=paymentInfoService.getByOrderSn(orderSn);
-        var order=getByOrderSn(orderSn);
-        if(!paymentInfo.getPayAmount().equals(orderPaidDTO.getPayAmount()))//验价
+        var orderSn = orderPaidDTO.getOrderSn();
+        var paymentInfo = paymentInfoService.getByOrderSn(orderSn);
+        var order = getByOrderSn(orderSn);
+        if (!paymentInfo.getPayAmount().equals(orderPaidDTO.getPayAmount()))// 验价
             throw new OrderPaymentException();
-        //更改订单状态
+        // 更改订单状态
         order.setStatus(OrderStatusEnum.PENDING_SHIPPED);
         save(order);
-        //更改支付状态
+        // 更改支付状态
         paymentInfo.setCallbackTime(LocalDateTime.now());
         paymentInfoService.save(paymentInfo);
     }
@@ -255,20 +256,21 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
     }
 
     private void sendOrderCloseDelayMsg(String orderSn) {
-        var topicAndTag=MQConstant.getTopicAndTag(MQConstant.Order.TOPIC, MQConstant.Order.TAG_CLOSE);
-        rocketTemplate.syncSend(topicAndTag, MessageBuilder.withPayload(orderSn).build(),10000, MQConstant.Order.ORDER_CLOSE_DELAY_TIME);
+        var topicAndTag = MQConstant.getTopicAndTag(MQConstant.Order.TOPIC, MQConstant.Order.TAG_CLOSE);
+        rocketTemplate.syncSend(topicAndTag, MessageBuilder.withPayload(orderSn).build(), 10000,
+                MQConstant.Order.ORDER_CLOSE_DELAY_TIME);
     }
 
     private void sendOrderCloseMsg(String orderSn) {
-        var topicAndTag=MQConstant.getTopicAndTag(MQConstant.Order.TOPIC, MQConstant.Order.TAG_CLOSE);
-        rocketTemplate.convertAndSend(topicAndTag,orderSn);
+        var topicAndTag = MQConstant.getTopicAndTag(MQConstant.Order.TOPIC, MQConstant.Order.TAG_CLOSE);
+        rocketTemplate.convertAndSend(topicAndTag, orderSn);
     }
 
-    private PaymentInfo getPaymentInfo(Order order){
+    private PaymentInfo getPaymentInfo(Order order) {
         // @formatter:off
         return new PaymentInfo()
                                 .setOrderId(order.getId())
-                                .setOrderSn(order.getOrderSn())
+                                .setOrderSn(order.getOrderSn())// TODO 缩短orderSn以适应微信平台
                                 .setPayAmount(order.getPayAmount());
         // @formatter:on
     }
