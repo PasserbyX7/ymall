@@ -190,7 +190,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
      */
     private void setBasicInfo(Order order) {
         // @formatter:off
-        order.setOrderSn(IdWorker.getTimeId())
+        order.setOrderSn(IdWorker.getIdStr())
                     .setAutoConfirmTime(OrderSettingConstant.AUTO_CONFIRM_RECEIPT_TIME)
                     .setIsDelete(false)
                     .setIsConfirm(false)
