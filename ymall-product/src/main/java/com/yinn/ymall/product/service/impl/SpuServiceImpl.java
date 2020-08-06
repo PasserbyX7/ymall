@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yinn.ymall.common.dto.SkuEsDTO;
 import com.yinn.ymall.common.dto.SkuHasStockDTO;
 import com.yinn.ymall.product.constant.PublishStatusEnum;
+import com.yinn.ymall.product.constant.VerifyStatusEnum;
 import com.yinn.ymall.product.dao.SpuDao;
 import com.yinn.ymall.product.dto.SpuDTO;
 import com.yinn.ymall.product.dto.SpuPageQueryDTO;
@@ -61,7 +62,13 @@ public class SpuServiceImpl extends ServiceImpl<SpuDao, Spu> implements SpuServi
     @Override
     public void save(SpuDTO spuDTO) {
         // 保存spu基本信息
-        var spu = spuDTO.convertToSpu().setPublishStatus(PublishStatusEnum.CREATE);
+        // @formatter:off
+        var spu = spuDTO.convertToSpu()
+                                    .setPublishStatus(PublishStatusEnum.CREATE)
+                                    .setIsRecommend(false)
+                                    .setIsDelete(false)
+                                    .setVerifyStatus(VerifyStatusEnum.CREATE);
+        // @formatter:on
         save(spu);
         Long spuId = spu.getId();
         // 保存spuAttr信息
