@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Primary;
 public class EsConfiguration {
 
     @Value("${spring.data.elasticsearch.cluster-node}")
-    private String host="139.198.188.61";
+    private String host;
     /**
      * ES通用设置项
      */

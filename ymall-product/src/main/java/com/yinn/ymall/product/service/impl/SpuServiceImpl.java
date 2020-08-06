@@ -143,7 +143,6 @@ public class SpuServiceImpl extends ServiceImpl<SpuDao, Spu> implements SpuServi
             Wrappers.<Spu>lambdaUpdate()
                 .eq(Spu::getId, spuId)
                 .set(Spu::getPublishStatus,PublishStatusEnum.UP)
-                .set(Spu::getUpdateTime,LocalDateTime.now())
             );
         // @formatter:on
     }

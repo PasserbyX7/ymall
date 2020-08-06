@@ -29,7 +29,7 @@ public class SkuStockController {
     @Autowired
     private SkuStockService skuStockService;
 
-    @ApiOperation(  "列出skus是否具有库存")
+    @ApiOperation("列出skus是否具有库存")
     @GetMapping("/skus/has-stock")
     public R<List<SkuHasStockDTO>> listSkuHasStock(@RequestParam List<Long> skuIds) {
         return R.ok(skuStockService.listSkuHasStock(skuIds));

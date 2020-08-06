@@ -43,9 +43,9 @@ public class ProductServiceImpl implements ProductService{
         try {
             res = client.bulk(bulkRequest, EsConfiguration.COMMON_OPTIONS);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new ProductUpException();
         }
-        var errorIds=Arrays.stream(res.getItems()).map(BulkItemResponse::getId).collect(Collectors.toList());
-        log.info("商品上架成功：{}", errorIds);
+        log.info("商品上架成功：{}", Arrays.stream(res.getItems()).map(BulkItemResponse::getId).collect(Collectors.toList()));
     }
 }
