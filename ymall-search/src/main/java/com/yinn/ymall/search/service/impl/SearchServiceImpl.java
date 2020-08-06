@@ -53,83 +53,76 @@ public class SearchServiceImpl implements SearchService {
             throw new EsSearchFailException();
         }
         // 封装返回数据
-        return buildSearchResultDTO(searchResponse,searchParamDTO);
+        return buildSearchResultDTO(searchResponse, searchParamDTO);
     }
 
     /**
      * 通过ES检索结果构建SearchResultDTO
+     *
      * @param response ES检索结果
-     * @param param 检索条件DTO
+     * @param param    检索条件DTO
      * @return SearchResultDTO
      * @Date: 2020-05-09 07:18:31
      */
     private SearchResultDTO buildSearchResultDTO(SearchResponse response, SearchParamDTO param) {
-        var res=new SearchResultDTO();
-        var hits=response.getHits();
-        //保存分页信息
-        var pageDTO=new SearchResultDTO.PageDTO()
-                                            .setTotal(hits.getTotalHits().value)
-                                            .setSize(EsConstant.PRODUCT_PAGE_SIZE)
-                                            .setCurrent(param.getPage());
+        var res = new SearchResultDTO();
+        var hits = response.getHits();
+        // 保存分页信息
+        var pageDTO = new SearchResultDTO.PageDTO().setTotal(hits.getTotalHits().value)
+                .setSize(param.getSize()).setCurrent(param.getCurrent());
         res.setPage(pageDTO);
-        //保存商品信息
-        List<SkuEsDTO> products=new ArrayList<>();
+        // 保存商品信息
+        List<SkuEsDTO> products = new ArrayList<>();
         for (var hit : hits.getHits()) {
-            var skuEs=JSON.parseObject(hit.getSourceAsString(), SkuEsDTO.class);
-            if(StringUtils.hasText(param.getKeyword())){//设置高亮
-                var title=hit.getHighlightFields().get("title").getFragments()[0].toString();
+            var skuEs = JSON.parseObject(hit.getSourceAsString(), SkuEsDTO.class);
+            if (StringUtils.hasText(param.getKeyword())) {// 设置高亮
+                var title = hit.getHighlightFields().get("title").getFragments()[0].toString();
                 skuEs.setTitle(title);
             }
             products.add(skuEs);
         }
         res.setProducts(products);
-        //获取聚合信息
-        ParsedLongTerms categoryAgg=response.getAggregations().get("category_agg");//设置分类信息
-        var categories=categoryAgg.getBuckets().stream()
-            .map(bucket->{
-            var category=new SearchResultDTO.CategoryDTO();
+        // 获取聚合信息
+        ParsedLongTerms categoryAgg = response.getAggregations().get("category_agg");// 设置分类信息
+        var categories = categoryAgg.getBuckets().stream().map(bucket -> {
+            var category = new SearchResultDTO.CategoryDTO();
             category.setCategoryId(bucket.getKeyAsNumber().longValue());
-            ParsedStringTerms categoryNameAgg=bucket.getAggregations().get("category_name_agg");
-            var categoryName=categoryNameAgg.getBuckets().get(0).getKeyAsString();
+            ParsedStringTerms categoryNameAgg = bucket.getAggregations().get("category_name_agg");
+            var categoryName = categoryNameAgg.getBuckets().get(0).getKeyAsString();
             category.setCategoryName(categoryName);
             return category;
         }).collect(Collectors.toList());
         res.setCategories(categories);
 
-        ParsedLongTerms brandAgg=response.getAggregations().get("brand_agg");//设置品牌信息
-        var brands=brandAgg.getBuckets().stream()
-            .map(bucket->{
-                var brand=new SearchResultDTO.BrandDTO();
-                brand.setBrandId(bucket.getKeyAsNumber().longValue());
-                ParsedStringTerms brandImgAgg=bucket.getAggregations().get("brand_img_agg");
-                var brandImg=brandImgAgg.getBuckets().get(0).getKeyAsString();
-                brand.setBrandImg(brandImg);
-                ParsedStringTerms brandNameAgg=bucket.getAggregations().get("brand_name_agg");
-                var brandName=brandNameAgg.getBuckets().get(0).getKeyAsString();
-                brand.setBrandName(brandName);
-                return brand;
-            })
-            .collect(Collectors.toList());
+        ParsedLongTerms brandAgg = response.getAggregations().get("brand_agg");// 设置品牌信息
+        var brands = brandAgg.getBuckets().stream().map(bucket -> {
+            var brand = new SearchResultDTO.BrandDTO();
+            brand.setBrandId(bucket.getKeyAsNumber().longValue());
+            ParsedStringTerms brandImgAgg = bucket.getAggregations().get("brand_img_agg");
+            var brandImg = brandImgAgg.getBuckets().get(0).getKeyAsString();
+            brand.setBrandImg(brandImg);
+            ParsedStringTerms brandNameAgg = bucket.getAggregations().get("brand_name_agg");
+            var brandName = brandNameAgg.getBuckets().get(0).getKeyAsString();
+            brand.setBrandName(brandName);
+            return brand;
+        }).collect(Collectors.toList());
         res.setBrands(brands);
 
-        ParsedNested attrAgg=response.getAggregations().get("attr_agg");//设置属性信息
-        ParsedLongTerms attrIdAgg=attrAgg.getAggregations().get("attr_id_agg");
-        var attrs=attrIdAgg.getBuckets().stream()
-            .map(bucket->{
-                var attr=new SearchResultDTO.AttrDTO();
-                attr.setAttrId(bucket.getKeyAsNumber().longValue());
+        ParsedNested attrAgg = response.getAggregations().get("attr_agg");// 设置属性信息
+        ParsedLongTerms attrIdAgg = attrAgg.getAggregations().get("attr_id_agg");
+        var attrs = attrIdAgg.getBuckets().stream().map(bucket -> {
+            var attr = new SearchResultDTO.AttrDTO();
+            attr.setAttrId(bucket.getKeyAsNumber().longValue());
 
-                ParsedStringTerms attrNameAgg=bucket.getAggregations().get("attr_name_agg");
-                var attrName=attrNameAgg.getBuckets().get(0).getKeyAsString();
-                attr.setAttrName(attrName);
-                ParsedStringTerms attrValueAgg=bucket.getAggregations().get("attr_value_agg");
-                var attrValues=attrValueAgg.getBuckets()
-                                    .stream()
-                                    .map(Terms.Bucket::getKeyAsString)
-                                    .collect(Collectors.toList());
-                attr.setAttrValues(attrValues);
-                return attr;
-            }).collect(Collectors.toList());
+            ParsedStringTerms attrNameAgg = bucket.getAggregations().get("attr_name_agg");
+            var attrName = attrNameAgg.getBuckets().get(0).getKeyAsString();
+            attr.setAttrName(attrName);
+            ParsedStringTerms attrValueAgg = bucket.getAggregations().get("attr_value_agg");
+            var attrValues = attrValueAgg.getBuckets().stream().map(Terms.Bucket::getKeyAsString)
+                    .collect(Collectors.toList());
+            attr.setAttrValues(attrValues);
+            return attr;
+        }).collect(Collectors.toList());
         res.setAttrs(attrs);
         log.debug("商品检索数据：[{}]", res);
         return res;
@@ -148,11 +141,11 @@ public class SearchServiceImpl implements SearchService {
         queryDSLBuilder(sourceBuilder, param);
         // 构建排序DSL
         sortDSLBuilder(sourceBuilder, param);
-        //构建pageDSL
+        // 构建pageDSL
         pageDSLBuilder(sourceBuilder, param);
-        //构建highlightDSL
+        // 构建highlightDSL
         highlightDSLBuilder(sourceBuilder, param);
-        //构建aggsDSL
+        // 构建aggsDSL
         aggsDSLBuilder(sourceBuilder, param);
         log.debug("DSL查询语句：[{}]", sourceBuilder.toString());
         return new SearchRequest(new String[] { EsConstant.PRODUCT_INDEX }, sourceBuilder);
@@ -188,8 +181,8 @@ public class SearchServiceImpl implements SearchService {
     }
 
     private void pageDSLBuilder(SearchSourceBuilder sourceBuilder, SearchParamDTO param) {
-        sourceBuilder.size(EsConstant.PRODUCT_PAGE_SIZE);
-        sourceBuilder.from((param.getPage() - 1) * EsConstant.PRODUCT_PAGE_SIZE);
+        sourceBuilder.size(param.getSize());
+        sourceBuilder.from((param.getCurrent() - 1) * param.getSize());
     }
 
     private void sortDSLBuilder(SearchSourceBuilder sourceBuilder, SearchParamDTO param) {
@@ -211,7 +204,7 @@ public class SearchServiceImpl implements SearchService {
             booleanBuilder.filter(QueryBuilders.termQuery("categoryId", param.getCategoryId()));
         if (!CollectionUtils.isEmpty(param.getBrandId()))// 品牌过滤
             booleanBuilder.filter(QueryBuilders.termsQuery("brandId", param.getBrandId()));
-        if (param.getHasStock())// 库存过滤
+        if (param.getHasStock() != null)// 库存过滤
             booleanBuilder.filter(QueryBuilders.termQuery("hasStock", param.getHasStock()));
         if (!CollectionUtils.isEmpty(param.getAttrs())) {// 属性过滤
             // 字符串格式：id:value1-value2
@@ -229,9 +222,9 @@ public class SearchServiceImpl implements SearchService {
             // 字符串格式：m-n
             // 如果m=-1，则代表无下限；如果n=-1，则代表无上限
             var rangeQuery = QueryBuilders.rangeQuery("price");
-            var numTuple=param.getPrice().split("-");
-            rangeQuery.gte(Integer.parseInt(numTuple[0]));//大于区间
-            if(numTuple.length==2)//小于区间
+            var numTuple = param.getPrice().split("-");
+            rangeQuery.gte(Integer.parseInt(numTuple[0]));// 大于区间
+            if (numTuple.length == 2)// 小于区间
                 rangeQuery.lte(Integer.parseInt(numTuple[1]));
             booleanBuilder.filter(rangeQuery);
         }

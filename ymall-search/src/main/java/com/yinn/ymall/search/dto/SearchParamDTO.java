@@ -37,8 +37,14 @@ public class SearchParamDTO {
     @ApiModelProperty(value = "属性值列表", example = "属性id:属性值1-属性值2")
     private List<String> attrs;// 格式：id:value1-value2
     /**
-     * 分页
+     * 每页显示条数，默认 10
      */
-    @ApiModelProperty(value = "当前页码", example = "1")
-    private Integer page;// 当前页码
+    @ApiModelProperty(value = "每页显示条数，默认 10", example = "10")
+    private Integer size = 10;
+
+    /**
+     * 当前页，默认1
+     */
+    @ApiModelProperty(value = "当前页，默认1", example = "1")
+    private Integer current = 1;
 }
