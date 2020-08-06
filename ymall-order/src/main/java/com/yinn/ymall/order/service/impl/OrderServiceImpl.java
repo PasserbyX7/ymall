@@ -270,7 +270,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
         // @formatter:off
         return new PaymentInfo()
                                 .setOrderId(order.getId())
-                                .setOrderSn(order.getOrderSn())// TODO 缩短orderSn以适应微信平台
+                                .setOrderSn(order.getOrderSn())
                                 .setPayAmount(order.getPayAmount());
         // @formatter:on
     }
