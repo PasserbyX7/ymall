@@ -1,4 +1,4 @@
-package com.yinn.ymall.search.exception;
+package com.yinn.ymall.common.exception;
 
 public class ProductUpException extends RuntimeException{
 

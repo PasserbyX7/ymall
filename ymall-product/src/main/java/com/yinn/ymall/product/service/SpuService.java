@@ -28,4 +28,6 @@ public interface SpuService extends IService<Spu> {
     void up(Long spuId);
 
 	Spu getBySkuId(Long skuId);
+
+	void down(Long spuId);
 }

@@ -8,6 +8,7 @@ import com.yinn.ymall.product.entity.Spu;
 import com.yinn.ymall.product.service.SpuService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +51,13 @@ public class SpuController {
     @PutMapping("/{spuId}/actions/up")
     public R<Void> up(@PathVariable Long spuId) {
         spuService.up(spuId);
+        return R.ok();
+    }
+
+    @ApiOperation("spu下架")
+    @DeleteMapping("/{spuId}/actions/down")
+    public R<Void> down(@PathVariable Long spuId) {
+        spuService.down(spuId);
         return R.ok();
     }
 

@@ -3,7 +3,6 @@ package com.yinn.ymall.search.controller;
 import com.yinn.ymall.common.api.ErrorCode;
 import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.search.exception.EsSearchFailException;
-import com.yinn.ymall.search.exception.ProductUpException;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,12 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
-
-    @ExceptionHandler(ProductUpException.class)
-    public R<Void> handleException(ProductUpException e) {
-        log.error("ES商品上架失败：[{}]", e.getMessage());
-        return R.fail(ErrorCode.RPC_RUNTIME_ERROR);
-    }
 
     @ExceptionHandler(EsSearchFailException.class)
     public R<Void> handleException(EsSearchFailException e) {

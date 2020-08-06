@@ -10,6 +10,7 @@ import com.yinn.ymall.search.service.ProductService;
 import com.yinn.ymall.search.service.SearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,13 @@ public class EsController {
     @PostMapping("/products/actions/up")
     public R<Void> productUp(@RequestBody List<SkuEsDTO> skuEsDTOs){
         productService.productUp(skuEsDTOs);
+        return R.ok();
+    }
+
+    @ApiOperation("商品下架")
+    @DeleteMapping("/products/actions/down")
+    public R<Void> productDown(@RequestBody Long spuId){
+        productService.productDown(spuId);
         return R.ok();
     }
 

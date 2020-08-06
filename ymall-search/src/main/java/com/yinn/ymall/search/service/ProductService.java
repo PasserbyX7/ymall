@@ -6,4 +6,6 @@ import com.yinn.ymall.common.dto.SkuEsDTO;
 
 public interface ProductService {
     void productUp(List<SkuEsDTO> skuEsList);
+
+	void productDown(Long spuId);
 }

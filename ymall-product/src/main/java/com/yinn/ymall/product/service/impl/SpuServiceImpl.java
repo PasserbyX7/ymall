@@ -19,6 +19,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yinn.ymall.common.dto.SkuEsDTO;
 import com.yinn.ymall.common.dto.SkuHasStockDTO;
+import com.yinn.ymall.common.exception.ProductDownException;
+import com.yinn.ymall.common.exception.ProductUpException;
+import com.yinn.ymall.common.exception.RPCException;
 import com.yinn.ymall.product.constant.PublishStatusEnum;
 import com.yinn.ymall.product.constant.VerifyStatusEnum;
 import com.yinn.ymall.product.dao.SpuDao;
@@ -120,8 +123,22 @@ public class SpuServiceImpl extends ServiceImpl<SpuDao, Spu> implements SpuServi
         // @formatter:on
         // 远程调用检索服务保存sku信息
         // 如果检索保存成功，则将更新spu信息为上架
-        if (searchFeignService.productUp(skuEsDTOs).isOk())
-            spuUp(spuId);
+        if (!searchFeignService.productUp(skuEsDTOs).isOk())
+            throw new ProductUpException();
+        spuUp(spuId);
+    }
+
+    @Override
+    public void down(Long spuId) {
+        if(!searchFeignService.productDown(spuId).isOk())
+            throw new ProductDownException();
+        // @formatter:off
+        update(
+            Wrappers.<Spu>lambdaUpdate()
+                .eq(Spu::getId, spuId)
+                .set(Spu::getPublishStatus,PublishStatusEnum.DOWN)
+            );
+        // @formatter:on
     }
 
     @Override
@@ -173,7 +190,8 @@ public class SpuServiceImpl extends ServiceImpl<SpuDao, Spu> implements SpuServi
                                         .collect(Collectors.toMap(SkuHasStockDTO::getSkuId, SkuHasStockDTO::getIsHasStock));
             // @formatter:on
         } catch (Exception e) {
-            log.error("库存查询异常：{}", e);
+            log.error("库存查询异常：{}", e.getMessage());
+            throw new RPCException(e.getMessage());
         }
         return skuStockMap;
     }
