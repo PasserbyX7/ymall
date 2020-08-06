@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 商品spu表
@@ -20,6 +21,7 @@ import lombok.Data;
  * @date 2020-05-02 02:57:50
  */
 @Data
+@Accessors(chain = true)
 @TableName
 public class Spu implements Serializable {
 

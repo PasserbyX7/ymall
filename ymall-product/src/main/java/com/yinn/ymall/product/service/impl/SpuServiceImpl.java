@@ -61,7 +61,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuDao, Spu> implements SpuServi
     @Override
     public void save(SpuDTO spuDTO) {
         // 保存spu基本信息
-        var spu = spuDTO.convertToSpu();
+        var spu = spuDTO.convertToSpu().setPublishStatus(PublishStatusEnum.CREATE);
         save(spu);
         Long spuId = spu.getId();
         // 保存spuAttr信息
