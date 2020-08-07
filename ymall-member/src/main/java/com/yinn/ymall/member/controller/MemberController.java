@@ -2,7 +2,7 @@ package com.yinn.ymall.member.controller;
 
 import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.common.utils.JwtUtils;
-import com.yinn.ymall.member.entity.Member;
+import com.yinn.ymall.member.dto.MemberDTO;
 import com.yinn.ymall.member.service.MemberService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +25,14 @@ public class MemberController {
 
     @ApiOperation("会员查询")
     @GetMapping("/{memberId}")
-    public R<Member> getById(@PathVariable Long memberId){
-        return R.ok(memberService.getById(memberId));
+    public R<MemberDTO> getById(@PathVariable Long memberId){
+        return R.ok(MemberDTO.convertFrom(memberService.getById(memberId)));
     }
 
     @ApiOperation("会员查询（JWT）")
     @GetMapping
-    public R<Member> getByJWT(@AuthenticationPrincipal(expression = JwtUtils.GET_USER_ID_EXPR) Long memberId){
-        return R.ok(memberService.getById(memberId));
+    public R<MemberDTO> getByJWT(@AuthenticationPrincipal(expression = JwtUtils.GET_USER_ID_EXPR) Long memberId){
+        return R.ok(MemberDTO.convertFrom(memberService.getById(memberId)));
     }
 
 }
