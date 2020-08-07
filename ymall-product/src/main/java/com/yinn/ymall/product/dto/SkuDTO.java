@@ -38,7 +38,10 @@ public class SkuDTO {
      * 销售属性
      */
     private List<SkuAttrValue> skuAttrs;
-
+    /**
+     * 库存数
+     */
+    private Integer stock = 0;
     public Sku convertToSku() {
         return new SkuDTOConverter().doForward(this, Sku.class);
     }

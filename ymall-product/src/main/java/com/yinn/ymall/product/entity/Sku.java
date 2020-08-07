@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.math.BigDecimal;
 import java.io.Serializable;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 商品sku表
@@ -15,6 +16,7 @@ import lombok.Data;
  * @date 2020-05-02 02:57:51
  */
 @Data
+@Accessors(chain=true)
 @TableName
 public class Sku implements Serializable {
 

@@ -1,16 +1,16 @@
 package com.yinn.ymall.product.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data
-@RequiredArgsConstructor(staticName = "of")
+@AllArgsConstructor
+@NoArgsConstructor
 public class SkuStockDTO {
 	/**
 	 * skuId
 	 */
-    @NonNull
 	private Long skuId;
 	/**
 	 * 库存数

@@ -57,7 +57,7 @@ public class SkuServiceImpl extends ServiceImpl<SkuDao, Sku> implements SkuServi
         // 保存销售属性
         saveSkuAttrs(skuDTO, skuId);
         // 远程同步库存信息
-        wareFeignService.saveSkuStock(SkuStockDTO.of(skuId));
+        wareFeignService.saveSkuStock(new SkuStockDTO(skuId,skuDTO.getStock(),0));
     }
 
     @Override
@@ -141,11 +141,13 @@ public class SkuServiceImpl extends ServiceImpl<SkuDao, Sku> implements SkuServi
     }
 
     private Sku saveSku(SkuDTO skuDTO, Spu spu) {
-        var sku = skuDTO.convertToSku();
-        sku.setCategoryId(spu.getCategoryId());
-        sku.setBrandId(spu.getBrandId());
-        sku.setSpuId(spu.getId());
-        sku.setSale(0);
+        // @formatter:off
+        var sku = skuDTO.convertToSku()
+                                    .setCategoryId(spu.getCategoryId())
+                                    .setBrandId(spu.getBrandId())
+                                    .setSpuId(spu.getId())
+                                    .setSale(0);
+        // @formatter:on
         setSkuDefaultImg(skuDTO, sku);
         save(sku);
         return sku;
