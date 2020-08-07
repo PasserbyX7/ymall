@@ -2,9 +2,11 @@ package com.yinn.ymall.ware.controller;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yinn.ymall.common.api.R;
 import com.yinn.ymall.common.dto.SkuHasStockDTO;
 import com.yinn.ymall.ware.dto.SkuLockDTO;
+import com.yinn.ymall.ware.dto.SkuStockPageQueryDTO;
 import com.yinn.ymall.ware.entity.SkuStock;
 import com.yinn.ymall.ware.service.SkuStockService;
 
@@ -39,6 +41,12 @@ public class SkuStockController {
     @GetMapping("/skus/{skuId}/has-stock")
     public R<Boolean> getSkuHasStock(@PathVariable Long skuId) {
         return R.ok(skuStockService.getSkuHasStock(skuId));
+    }
+
+    @ApiOperation("库存分页查询")
+    @GetMapping
+    public R<Page<SkuStock>> queryPage(SkuStockPageQueryDTO skuStockPageQueryDTO){
+        return R.ok(skuStockService.queryPage(skuStockPageQueryDTO));
     }
 
     @ApiOperation("新增库存")

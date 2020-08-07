@@ -2,9 +2,11 @@ package com.yinn.ymall.ware.service;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yinn.ymall.common.dto.SkuHasStockDTO;
 import com.yinn.ymall.ware.dto.SkuLockDTO;
+import com.yinn.ymall.ware.dto.SkuStockPageQueryDTO;
 import com.yinn.ymall.ware.entity.SkuStock;
 
 /**
@@ -44,4 +46,6 @@ public interface SkuStockService extends IService<SkuStock> {
     void stockDeduct(String orderSn);
 
 	Boolean getSkuHasStock(Long skuId);
+
+	Page<SkuStock> queryPage(SkuStockPageQueryDTO skuStockPageQueryDTO);
 }

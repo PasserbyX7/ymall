@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yinn.ymall.common.constant.MQConstant;
 import com.yinn.ymall.common.dto.SkuHasStockDTO;
@@ -17,6 +18,7 @@ import com.yinn.ymall.ware.constant.OrderStatusEnum;
 import com.yinn.ymall.ware.constant.OrderTaskStatusEnum;
 import com.yinn.ymall.ware.dao.SkuStockDao;
 import com.yinn.ymall.ware.dto.SkuLockDTO;
+import com.yinn.ymall.ware.dto.SkuStockPageQueryDTO;
 import com.yinn.ymall.ware.entity.OrderTask;
 import com.yinn.ymall.ware.entity.SkuStock;
 import com.yinn.ymall.ware.exception.StockShortageException;
@@ -104,6 +106,12 @@ public class SkuStockServiceImpl extends ServiceImpl<SkuStockDao, SkuStock> impl
     @Override
     public Boolean getSkuHasStock(Long skuId) {
         return getOne(Wrappers.<SkuStock>lambdaQuery().eq(SkuStock::getSkuId, skuId)).getIsHasStock();
+    }
+
+    @Override
+    public Page<SkuStock> queryPage(SkuStockPageQueryDTO query) {
+        var w = Wrappers.<SkuStock>lambdaQuery().eq(query.getKey() != null, SkuStock::getId, query.getKey());
+        return (Page<SkuStock>) page(query.page(), w);
     }
 
     private void stockUnlock(OrderTask orderTask){
