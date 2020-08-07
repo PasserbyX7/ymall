@@ -110,7 +110,9 @@ public class SkuStockServiceImpl extends ServiceImpl<SkuStockDao, SkuStock> impl
 
     @Override
     public Page<SkuStock> queryPage(SkuStockPageQueryDTO query) {
-        var w = Wrappers.<SkuStock>lambdaQuery().eq(query.getKey() != null, SkuStock::getId, query.getKey());
+        var w = Wrappers.<SkuStock>lambdaQuery();
+        w.eq(query.getId() != null, SkuStock::getId, query.getId());
+        w.eq(query.getSkuId() != null, SkuStock::getSkuId, query.getSkuId());
         return (Page<SkuStock>) page(query.page(), w);
     }
 

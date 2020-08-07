@@ -17,7 +17,10 @@ public class SkuStockPageQueryDTO extends PageQueryDTO<SkuStock> implements Seri
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("查询关键字：匹配id")
-    private String key;
+    @ApiModelProperty("匹配id")
+    private Long id;
+
+    @ApiModelProperty("匹配skuId")
+    private Long skuId;
 
 }
