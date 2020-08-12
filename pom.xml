@@ -28,6 +28,7 @@
         <module>ymall-ware</module>
         <module>ymall-payment</module>
         <module>ymall-coupon</module>
+        <module>ymall-seckill</module>
     </modules>
 
     <properties>
