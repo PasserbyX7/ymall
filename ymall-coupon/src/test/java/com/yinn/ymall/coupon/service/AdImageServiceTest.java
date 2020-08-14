@@ -13,11 +13,11 @@
 // public class AdImageServiceTest {
 
 //     @Autowired
-//     AdImgService adImgService;
+//     SeckillSessionService seckillSessionService;
 
 //     @Test
 //     void test(){
-//         adImgService.save(new AdImg().setPic("test"));
+//         System.out.println(seckillSessionService.getByDays(3));
 //     }
 
 // }

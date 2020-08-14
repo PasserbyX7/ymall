@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @since 2020-08-14
  */
 @RestController
-@Api("秒杀商品关联接口")
+@Api(tags = "秒杀商品关联接口")
 @RequestMapping("/api/coupon/v1/seckill-sku-relations")
 public class SeckillSkuRelationController {
 
@@ -31,7 +31,7 @@ public class SeckillSkuRelationController {
 
     @ApiOperation("秒杀商品关联分页查询")
     @GetMapping
-    public R<Page<SeckillSkuRelation>> queryPage(SeckillSkuRelationPageQueryDTO seckillSkuRelationPageQueryDTO){
+    public R<Page<SeckillSkuRelation>> queryPage(SeckillSkuRelationPageQueryDTO seckillSkuRelationPageQueryDTO) {
         return R.ok(seckillSkuRelationService.queryPage(seckillSkuRelationPageQueryDTO));
     }
 }
