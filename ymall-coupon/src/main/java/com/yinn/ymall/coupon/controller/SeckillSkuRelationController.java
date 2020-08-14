@@ -34,4 +34,5 @@ public class SeckillSkuRelationController {
     public R<Page<SeckillSkuRelation>> queryPage(SeckillSkuRelationPageQueryDTO seckillSkuRelationPageQueryDTO) {
         return R.ok(seckillSkuRelationService.queryPage(seckillSkuRelationPageQueryDTO));
     }
+
 }

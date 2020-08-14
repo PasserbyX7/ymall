@@ -17,3 +17,5 @@ spring:
           group: common
         - data-id: swagger.yml
           group: common
+        - data-id: redis.yml
+          group: common

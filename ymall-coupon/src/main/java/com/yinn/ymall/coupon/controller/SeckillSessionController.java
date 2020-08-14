@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import com.yinn.ymall.common.api.R;
+import com.yinn.ymall.coupon.dto.SeckillSessionDTO;
 import com.yinn.ymall.coupon.entity.SeckillSession;
 import com.yinn.ymall.coupon.service.SeckillSessionService;
 import io.swagger.annotations.Api;
@@ -40,9 +41,9 @@ public class SeckillSessionController {
         return R.ok(seckillSessionService.getById(seckillSessionId));
     }
 
-    @ApiOperation("最近n天秒杀时段查询")
+    @ApiOperation("最近n天秒杀时段及对应sku查询")
     @GetMapping("/days/{days}")
-    public R<List<SeckillSession>> getByDays(@PathVariable Integer days) {
+    public R<List<SeckillSessionDTO>> getByDays(@PathVariable Integer days) {
         return R.ok(seckillSessionService.getByDays(days));
     }
 

@@ -1,23 +1,18 @@
-package com.yinn.ymall.coupon.entity;
+package com.yinn.ymall.seckill.dto;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 @Data
-@TableName
-@Accessors(chain = true)
-public class SeckillSkuRelation implements Serializable {
+public class SeckillSkuRelationDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 主键
      */
-    @TableId
     private Long id;
 
     /**

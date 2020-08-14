@@ -1,5 +1,6 @@
 package com.yinn.ymall.coupon.service;
 
+import com.yinn.ymall.coupon.dto.SeckillSessionDTO;
 import com.yinn.ymall.coupon.entity.SeckillSession;
 
 import java.util.List;
@@ -16,6 +17,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SeckillSessionService extends IService<SeckillSession> {
 
-	List<SeckillSession> getByDays(Integer days);
+	List<SeckillSessionDTO> getByDays(Integer days);
 
 }

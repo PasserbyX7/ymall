@@ -2,6 +2,9 @@ package com.yinn.ymall.coupon.service;
 
 import com.yinn.ymall.coupon.dto.SeckillSkuRelationPageQueryDTO;
 import com.yinn.ymall.coupon.entity.SeckillSkuRelation;
+
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -17,4 +20,5 @@ public interface SeckillSkuRelationService extends IService<SeckillSkuRelation> 
 
 	Page<SeckillSkuRelation> queryPage(SeckillSkuRelationPageQueryDTO seckillSkuRelationPageQueryDTO);
 
+    List<SeckillSkuRelation>listBySessionId(Long sessionId);
 }
