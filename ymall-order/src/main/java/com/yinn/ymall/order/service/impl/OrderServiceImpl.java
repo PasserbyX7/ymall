@@ -72,7 +72,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
 
     @Override
     public OrderConfirmDTO getOrderConfirmDTO(Long memberId) {
-        // TODO 异步编排
         var orderConfirmDTO = new OrderConfirmDTO();
         // 远程查询收货地址列表
         var addressList = memberFeignService.listMemberAddressesByMemberId(memberId).getData();

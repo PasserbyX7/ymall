@@ -2,6 +2,7 @@ package com.yinn.ymall.seckill.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -50,4 +51,18 @@ public class SeckillSkuRelationDTO implements Serializable {
      */
     private Integer sort;
 
+    /**
+     * 开始时间
+     */
+    private LocalDateTime startTime;
+
+    /**
+     * 结束时间
+     */
+    private LocalDateTime endTime;
+
+    /**
+     * 随机码
+     */
+    private String token;
 }
