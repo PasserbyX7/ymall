@@ -118,7 +118,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuDao, Spu> implements SpuServi
                 .map(this::skuConvertToSkuEsDTO)// 设置基本属性
                 .map(e -> e.setAttrs(attrEsDTOs))// 设置属性列表
                 .map(e -> e.setHotScore(0L))// 设置热度
-                .map(e -> e.setHasStock(Optional.of(skuStockMap.get(e.getSkuId())).orElse(false)))// 设置库存
+                .map(e -> e.setHasStock(Optional.ofNullable(skuStockMap.get(e.getSkuId())).orElse(false)))// 设置库存
                 .collect(Collectors.toList());
         // @formatter:on
         // 远程调用检索服务保存sku信息

@@ -1,5 +1,7 @@
 package com.yinn.ymall.seckill.service;
 
+import com.yinn.ymall.seckill.dto.KillDTO;
+
 public interface SeckillService {
 
     /**
@@ -9,5 +11,7 @@ public interface SeckillService {
      * @Date: 2020-08-14 02:34:47
      */
     void up(int day);
+
+	String kill(KillDTO killDTO);
 
 }

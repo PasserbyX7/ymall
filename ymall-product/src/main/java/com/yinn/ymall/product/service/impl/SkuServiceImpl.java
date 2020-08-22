@@ -80,7 +80,7 @@ public class SkuServiceImpl extends ServiceImpl<SkuDao, Sku> implements SkuServi
     @Override
     public BigDecimal getPriceById(Long skuId) {
         // @formatter:off
-        return Optional.of(getById(skuId))
+        return Optional.ofNullable(getById(skuId))
                                 .map(Sku::getPrice)
                                 .orElse(null);
         // @formatter:on
@@ -108,6 +108,7 @@ public class SkuServiceImpl extends ServiceImpl<SkuDao, Sku> implements SkuServi
         skuItem.setSpuAttrGroupDTOs(attrGroupService.listSpuAttrGroupDTOs(spuId, categoryId));
         // 获取spu销售属性信息
         skuItem.setSkuAttrDTOs(skuAttrValueService.listSkuAttrDTOBySpuId(spuId));
+        // TODO 远程查询sku秒杀预告
         return skuItem;
     }
 
